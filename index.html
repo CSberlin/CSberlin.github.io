@@ -171,6 +171,272 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/04/08/leetcode111/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="HC">
+      <meta itemprop="description" content="才高八里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HCs blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/08/leetcode111/" class="post-title-link" itemprop="url">leetcode111</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-08 15:26:42 / 修改时间：17:11:25" itemprop="dateCreated datePublished" datetime="2021-04-08T15:26:42+08:00">2021-04-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><a href="#1-%E9%A2%98%E7%9B%AE">1. 题目</a><ul>
+<li><a href="#11-%E8%BE%93%E5%85%A5">1.1. 输入</a></li>
+<li><a href="#12-%E8%BE%93%E5%87%BA">1.2. 输出</a></li>
+<li><a href="#13-%E8%BE%93%E5%85%A5">1.3. 输入</a></li>
+<li><a href="#14-%E8%BE%93%E5%87%BA">1.4. 输出</a></li>
+</ul>
+</li>
+<li><a href="#2-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF1-%E6%B7%B1%E6%90%9C">2. 解题思路1: 深搜</a></li>
+<li><a href="#3-%E4%BB%A3%E7%A0%811">3. 代码1</a></li>
+<li><a href="#4-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF2-%E5%AE%BD%E6%90%9C">4. 解题思路2: 宽搜</a></li>
+<li><a href="#5-%E4%BB%A3%E7%A0%812">5. 代码2</a></li>
+</ul>
+<h1 id="1-题目"><a href="#1-题目" class="headerlink" title="1. 题目"></a>1. 题目</h1><p>给定一个二叉树，找出其最小深度。<br>最小深度是从根节点到最近叶子节点的最短路径上的节点数量。<br>说明：叶子节点是指没有子节点的节点。</p>
+<h2 id="1-1-输入"><a href="#1-1-输入" class="headerlink" title="1.1. 输入"></a>1.1. 输入</h2><p>root = [3,9,20,null,null,15,7]</p>
+<h2 id="1-2-输出"><a href="#1-2-输出" class="headerlink" title="1.2. 输出"></a>1.2. 输出</h2><p>2</p>
+<h2 id="1-3-输入"><a href="#1-3-输入" class="headerlink" title="1.3. 输入"></a>1.3. 输入</h2><p>root = [2,null,3,null,4,null,5,null,6]</p>
+<h2 id="1-4-输出"><a href="#1-4-输出" class="headerlink" title="1.4. 输出"></a>1.4. 输出</h2><p>5</p>
+<h1 id="2-解题思路1-深搜"><a href="#2-解题思路1-深搜" class="headerlink" title="2. 解题思路1: 深搜"></a>2. 解题思路1: 深搜</h1><h1 id="3-代码1"><a href="#3-代码1" class="headerlink" title="3. 代码1"></a>3. 代码1</h1><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode root)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (root.left == <span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.right) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (root.right == <span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.left) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> Math.min(minDepth(root.left), minDepth(root.right)) + <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="4-解题思路2-宽搜"><a href="#4-解题思路2-宽搜" class="headerlink" title="4. 解题思路2: 宽搜"></a>4. 解题思路2: 宽搜</h1><h1 id="5-代码2"><a href="#5-代码2" class="headerlink" title="5. 代码2"></a>5. 代码2</h1><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode {</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}</span></span><br><span class="line"><span class="comment"> * };</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode* root)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> deep=<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">bfs</span>(root,deep);</span><br><span class="line">        <span class="keyword">return</span> deep;</span><br><span class="line">    }</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(TreeNode* root,<span class="keyword">int</span> &amp;deep)</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        queue&lt;TreeNode *&gt; q;</span><br><span class="line">        q.<span class="built_in">push</span>(root);</span><br><span class="line">        TreeNode* end=root;</span><br><span class="line">        <span class="keyword">int</span> level=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">        {</span><br><span class="line">            TreeNode* p = q.<span class="built_in">front</span>();</span><br><span class="line">            q.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;left==<span class="literal">NULL</span>&amp;&amp;p-&gt;right==<span class="literal">NULL</span>)</span><br><span class="line">            {</span><br><span class="line">                deep=level;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;left){q.<span class="built_in">push</span>(p-&gt;left);}</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;right){q.<span class="built_in">push</span>(p-&gt;right);}</span><br><span class="line">            <span class="keyword">if</span>(p==end)</span><br><span class="line">            {</span><br><span class="line">                end = q.<span class="built_in">back</span>();</span><br><span class="line">                level++;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/04/08/leetcode26/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="HC">
+      <meta itemprop="description" content="才高八里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HCs blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/08/leetcode26/" class="post-title-link" itemprop="url">leetcode26</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-08 11:38:41 / 修改时间：16:42:14" itemprop="dateCreated datePublished" datetime="2021-04-08T11:38:41+08:00">2021-04-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><a href="#1-%E9%A2%98%E7%9B%AE">1. 题目</a></li>
+<li><a href="#2-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF1">2. 解题思路1</a><ul>
+<li><a href="#21-%E4%BB%A3%E7%A0%811">2.1. 代码1</a></li>
+</ul>
+</li>
+<li><a href="#3-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF2">3. 解题思路2</a><ul>
+<li><a href="#301-%E4%BB%A3%E7%A0%812">3.0.1. 代码2</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="1-题目"><a href="#1-题目" class="headerlink" title="1. 题目"></a>1. 题目</h1><p>给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。<br>不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。nums 已按升序排列</p>
+<h1 id="2-解题思路1"><a href="#2-解题思路1" class="headerlink" title="2. 解题思路1"></a>2. 解题思路1</h1><p>自己写的一个模拟删除过程，维护一个计数器够数了就减</p>
+<h2 id="2-1-代码1"><a href="#2-1-代码1" class="headerlink" title="2.1. 代码1"></a>2.1. 代码1</h2><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span>(nums.<span class="built_in">size</span>()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> len=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">int</span> cnt=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;len;j++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(nums[j]==nums[j<span class="number">-1</span>])</span><br><span class="line">                cnt++;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                cnt=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(cnt==<span class="number">2</span>)</span><br><span class="line">            {</span><br><span class="line">                nums.<span class="built_in">erase</span>(nums.<span class="built_in">begin</span>()+j);</span><br><span class="line">                len--,j--,cnt--;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> len;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="3-解题思路2"><a href="#3-解题思路2" class="headerlink" title="3. 解题思路2"></a>3. 解题思路2</h1><p>看完leetcode官方双指针后写的C++版本，但是还是干不过你们<br><img src="https://pic.leetcode-cn.com/1617850114-hzBzol-%E6%88%AA%E5%B1%8F2021-04-08%20%E4%B8%8A%E5%8D%8810.48.20.png" alt="截屏2021-04-08 上午10.48.20.png"></p>
+<h3 id="3-0-1-代码2"><a href="#3-0-1-代码2" class="headerlink" title="3.0.1. 代码2"></a>3.0.1. 代码2</h3><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span>(nums.<span class="built_in">size</span>()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>,len=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;len;j++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(nums[j]!=nums[i])</span><br><span class="line">            {</span><br><span class="line">                i++;</span><br><span class="line">                nums[i] = nums[j];</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/04/08/leetcode80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="HC">
+      <meta itemprop="description" content="才高八里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HCs blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/08/leetcode80/" class="post-title-link" itemprop="url">leetcode80</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-08 11:38:41 / 修改时间：16:42:10" itemprop="dateCreated datePublished" datetime="2021-04-08T11:38:41+08:00">2021-04-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><a href="#1-%E9%A2%98%E7%9B%AE">1. 题目</a></li>
+<li><a href="#2-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF1">2. 解题思路1</a><ul>
+<li><a href="#21-%E4%BB%A3%E7%A0%811">2.1. 代码1</a></li>
+</ul>
+</li>
+<li><a href="#3-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF2">3. 解题思路2</a><ul>
+<li><a href="#31-%E4%BB%A3%E7%A0%812%E7%BD%91%E4%B8%8A%E7%9A%84%E5%8F%8C%E6%8C%87%E9%92%88%E9%A2%98%E8%A7%A3">3.1. 代码2(网上的双指针题解)</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="1-题目"><a href="#1-题目" class="headerlink" title="1. 题目"></a>1. 题目</h1><p>给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 最多出现两次 ，返回删除后数组的新长度。<br>不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。nums 升序</p>
+<h1 id="2-解题思路1"><a href="#2-解题思路1" class="headerlink" title="2. 解题思路1"></a>2. 解题思路1</h1><p>自己写的一个模拟删除过程，维护一个计数器够数了就减</p>
+<h2 id="2-1-代码1"><a href="#2-1-代码1" class="headerlink" title="2.1. 代码1"></a>2.1. 代码1</h2><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>{</span><br><span class="line">        <span class="keyword">int</span> len = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">int</span> cnt=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len;i++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(nums[i]==nums[i<span class="number">-1</span>])</span><br><span class="line">            {</span><br><span class="line">                cnt++;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                cnt=<span class="number">1</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">if</span>(cnt==<span class="number">3</span>)</span><br><span class="line">            {</span><br><span class="line">                nums.<span class="built_in">erase</span>(nums.<span class="built_in">begin</span>()+i);</span><br><span class="line">                cnt--;</span><br><span class="line">                len--;</span><br><span class="line">                i--;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> len;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="3-解题思路2"><a href="#3-解题思路2" class="headerlink" title="3. 解题思路2"></a>3. 解题思路2</h1><ul>
+<li><p>慢指针表示处理出的数组的长度，快指针表示已经检查过的数组的长度</p>
+</li>
+<li><p>即 nums[left],nums[right] 表示待检查的第一个元素，nums[left−1] 为上一个应该被保留的元素所移动到的指定位置.</p>
+</li>
+<li><p>检查上上个应该被保留的元素 nums[left-2] 是否和当前待检查元素 nums[right] 相同。当且仅当 nums[left-2]=nums[right]时，当前待检查元素 nums[right] 不应该被保留</p>
+</li>
+<li><p>用left-2内的元素都已经合法，通过right与left-2的比较，表示当前的元素欲检查的元素是否需要将left指向的元素更新</p>
+<ul>
+<li>如果相同，right指针继续往后移，left指针不动。</li>
+<li>如果不相同，right指针指向的值要覆盖掉left指向的值，然后他们同时往后移一步</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-1-代码2-网上的双指针题解"><a href="#3-1-代码2-网上的双指针题解" class="headerlink" title="3.1. 代码2(网上的双指针题解)"></a>3.1. 代码2(网上的双指针题解)</h2><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> right = <span class="number">0</span>; right &lt; nums.length; right++) {</span><br><span class="line">        <span class="keyword">if</span> (left &lt; <span class="number">2</span> || nums[right] != nums[left - <span class="number">2</span>])</span><br><span class="line">            nums[left++] = nums[right];</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/02/06/%E5%88%B7%E9%A2%98%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -577,103 +843,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/02/01/*pat%E7%94%B2%E7%BA%A71031/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="HC">
-      <meta itemprop="description" content="才高八里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HCs blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/01/*pat%E7%94%B2%E7%BA%A71031/" class="post-title-link" itemprop="url">PAT甲级1031</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-01 11:56:41" itemprop="dateCreated datePublished" datetime="2021-02-01T11:56:41+08:00">2021-02-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-03 19:52:26" itemprop="dateModified" datetime="2021-04-03T19:52:26+08:00">2021-04-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PAT-%E7%94%B2%E7%BA%A7/" itemprop="url" rel="index"><span itemprop="name">PAT 甲级</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li><a href="#1-question">1. Question</a><ul>
-<li><a href="#11-input-specification">1.1. Input Specification:</a></li>
-<li><a href="#12-output-specification">1.2. Output Specification</a></li>
-<li><a href="#13-sample-input">1.3. Sample Input</a></li>
-<li><a href="#14-sample-output">1.4. Sample Output</a></li>
-</ul>
-</li>
-<li><a href="#2-%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">2. 题目大意</a></li>
-<li><a href="#3-code">3. code</a></li>
-</ul>
-<h1 id="1-Question"><a href="#1-Question" class="headerlink" title="1. Question"></a>1. Question</h1><p>Given any string of N (≥5) characters, you are asked to form the characters into the shape of U. For example, helloworld can be printed as:</p>
-<p>h    d<br>e    l<br>l    r<br>lowo</p>
-<p>That is, the characters must be printed in the original order, starting top-down from the left vertical line with n1 characters, then left to right along the bottom line with n2 characters, and finally bottom-up along the vertical line with n3 characters. And more, we would like U to be as squared as possible — that is, it must be satisfied that n1 = n3 = max { k| k &lt;= n2 for all 3 &lt;= n2 &lt;= N } with n1 + n2 + n3 – 2 = N.</p>
-<h2 id="1-1-Input-Specification"><a href="#1-1-Input-Specification" class="headerlink" title="1.1. Input Specification:"></a>1.1. Input Specification:</h2><p>Each input file contains one test case. Each case contains one string with no less than 5 and no more than 80 characters in a line. The string contains no white space.</p>
-<h2 id="1-2-Output-Specification"><a href="#1-2-Output-Specification" class="headerlink" title="1.2. Output Specification"></a>1.2. Output Specification</h2><p>For each test case, print the input string in the shape of U as specified in the description.</p>
-<h2 id="1-3-Sample-Input"><a href="#1-3-Sample-Input" class="headerlink" title="1.3. Sample Input"></a>1.3. Sample Input</h2><p>helloworld!</p>
-<h2 id="1-4-Sample-Output"><a href="#1-4-Sample-Output" class="headerlink" title="1.4. Sample Output"></a>1.4. Sample Output</h2><p>h   !<br>e   d<br>l   l<br>lowor</p>
-<h1 id="2-题目大意"><a href="#2-题目大意" class="headerlink" title="2. 题目大意"></a>2. 题目大意</h1><p>用所给字符串按U型输出。n1和n3是左右两条竖线从上到下的字符个数，n2是底部横线从左到右的字符个数。要求：</p>
-<ol>
-<li>n1 == n3</li>
-<li>n2 &gt;= n1</li>
-<li>n1为在满足上述条件的情况下的最大值</li>
-</ol>
-<h1 id="3-code"><a href="#3-code" class="headerlink" title="3. code"></a>3. code</h1><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  PAT 甲 1031.cpp</span></span><br><span class="line"><span class="comment">//  Fushi</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by H C on 2021/2/8.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    string s;</span><br><span class="line">    <span class="built_in">getline</span>(cin,s);</span><br><span class="line"><span class="comment">//    由于gets()在pat中无法通过编译，故通过定义string使用getline(cin,s)函数</span></span><br><span class="line">    <span class="keyword">int</span> len = (<span class="keyword">int</span>)s.<span class="built_in">length</span>();</span><br><span class="line">    <span class="keyword">int</span> n1=<span class="number">0</span>,n2=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> max = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">3</span>; i&lt;=len; i++) {<span class="comment">//i为n2上限</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;=i; j++) {<span class="comment">//j为n1与n3上限</span></span><br><span class="line">            <span class="keyword">if</span> ((<span class="number">2</span>*j+i<span class="number">-2</span>==len)&amp;&amp;j&gt;max) {</span><br><span class="line">                max = j;</span><br><span class="line">                n1 = j;</span><br><span class="line">                n2 = i;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n1<span class="number">-1</span>; i++) {<span class="comment">//输出n1行数据</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>,s[i]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n2<span class="number">-2</span>; j++) {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c\n"</span>,s[len<span class="number">-1</span>-i]);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n2; i++) {</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>,s[n1+i<span class="number">-1</span>]);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/02/01/pat%E7%94%B2%E7%BA%A71006/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -948,7 +1117,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/01/25/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/01/25/%E5%95%86%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%901/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -962,7 +1131,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/25/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2021/01/25/%E5%95%86%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%901/" class="post-title-link" itemprop="url">商务数据分析1</a>
         </h2>
 
         <div class="post-meta">
@@ -972,7 +1141,23 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-01-25 11:40:13" itemprop="dateCreated datePublished" datetime="2021-01-25T11:40:13+08:00">2021-01-25</time>
+              <time title="创建时间：2021-01-25 11:56:41" itemprop="dateCreated datePublished" datetime="2021-01-25T11:56:41+08:00">2021-01-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 17:09:38" itemprop="dateModified" datetime="2021-04-08T17:09:38+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DL/" itemprop="url" rel="index"><span itemprop="name">DL</span></a>
+                </span>
             </span>
 
           
@@ -986,15 +1171,104 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+          <h1 id="参数更新方法"><a href="#参数更新方法" class="headerlink" title="参数更新方法"></a>参数更新方法</h1><ul>
+<li>若要优化损失函数得到损失函数的极小值，可对每个参数求偏导，令偏导为0，联立方程求解最优的参数。但参数多时代价太大。故采用梯度下降法不断逼近损失函数的极小值</li>
+</ul>
+<h2 id="方向导数，梯度概念"><a href="#方向导数，梯度概念" class="headerlink" title="方向导数，梯度概念"></a>方向导数，梯度概念</h2><img src="https://res.cloudinary.com/dq1yc7tiz/image/upload/v1617793901/deep%20learning/%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0%E5%AE%9A%E4%B9%89_dcs0ri.jpg" width="50%" height="50%">
+
+<img src="https://res.cloudinary.com/dq1yc7tiz/image/upload/v1617793857/deep%20learning/%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0%E6%8E%A8%E5%AF%BC_hu06da.jpg" width="50%" height="50%">
+
+<img src="https://res.cloudinary.com/dq1yc7tiz/image/upload/v1617793864/deep%20learning/%E6%A2%AF%E5%BA%A6%E5%AE%9A%E4%B9%89_pingu0.jpg" width="50%" height="50%">
+
+<img src="https://res.cloudinary.com/dq1yc7tiz/image/upload/v1617793865/deep%20learning/%E6%A2%AF%E5%BA%A6%E6%8E%A8%E5%AF%BC_jf4mp9.jpg" width="50%" height="50%">
+
+<h2 id="梯度下降数学推导"><a href="#梯度下降数学推导" class="headerlink" title="梯度下降数学推导"></a>梯度下降数学推导</h2><h1 id="训练方法"><a href="#训练方法" class="headerlink" title="训练方法"></a>训练方法</h1><ul>
+<li>批量训练<ul>
+<li>以所有样本为训练为一个epoch，对所有样本的loss求和后反向传播更新参数</li>
+</ul>
+</li>
+<li>随机梯度下降<ul>
+<li>随机挑一个样本训练为一个epoch，算出一个样本的loss后反向传播更新参数</li>
+</ul>
+</li>
+<li>mini batch<ul>
+<li>随机选十几个样本（打比方）训练为一个epoch，算出这十几个样本求和后的loos反向传播更新参数</li>
+</ul>
+</li>
+</ul>
+<h1 id="梯度消失"><a href="#梯度消失" class="headerlink" title="梯度消失"></a>梯度消失</h1><ul>
+<li>网络反向传播时到达靠近输入层的网络时梯度更新的值非常的小</li>
+</ul>
+<h1 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h1><ul>
+<li>Sigmod函数 (两头过于平坦，输出值域不对称，相当于没有梯度)<ul>
+<li>$Sigmod(x) = \frac{1}{1+e^{-x}}, Sigmod(x) \in (0,1)$</li>
+</ul>
+</li>
+<li>双曲正切（tanh）（两头过于平坦，输出值域对称，相当于没有梯度）<ul>
+<li>$tanh(x) = \frac{e^{x}-e^{-x}}{e^{-x}+e^{x}}, tanh(x) \in (-1,1)$</li>
+</ul>
+</li>
+<li>ReLU函数（常用，收敛速度比前两种快，计算高效）<ul>
+<li>$Relu(x) = \max{0,x} $</li>
+</ul>
+</li>
+<li>Leaky ReLU（解决死亡神经元问题）<ul>
+<li>$$f(x) = \begin{cases}<br>\alpha \ast x &amp; x &lt; 0 \<br>x &amp;x \geq 0<br>\end{cases}$$</li>
+</ul>
+</li>
+</ul>
+<h1 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h1><ul>
+<li>最小平方误差（MSE）<ul>
+<li>$MSE = \frac{1}{2n}\displaystyle \sum^{n}_{i=1}{(\hat y_i-y_i)^2}$</li>
+</ul>
+</li>
+<li>交叉熵(二分类问题,也可以用于[0,1]区间的回归问题)<ul>
+<li>$$J(w) = -\frac{1}{N}\displaystyle \sum^{N}_{n=1}{y_nlog{\hat{y_n}}+(1-y_n)log(1-\hat y_n)}$$<ul>
+<li>($y_n$为第n个样本的真值，$\hat y_n$为第n个样本的预测值)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="学习率"><a href="#学习率" class="headerlink" title="学习率"></a>学习率</h1><ul>
+<li>基于经验手动调</li>
+<li>固定学习率</li>
+<li>动量法动态调整</li>
+<li>随机梯度下降</li>
+<li>Adam自动调整</li>
+</ul>
+<h1 id="评估方法"><a href="#评估方法" class="headerlink" title="评估方法"></a>评估方法</h1><ul>
+<li>使用测试集（尽可能与训练集互斥进行泛化误差的估计）<ul>
+<li>留出法：将数据姐划分一部分做测试集一部分做训练集，测试集与训练集正负样本分布尽可能均匀。常见将$\frac{2}{3}-\frac{4}{5}$的数据集作为训练集。可多次留出，对测试集结果取平均。</li>
+<li>交叉验证法：如十折交叉验证，分10份，9训练1测试，进行10次测试，每次测试集合两两不同，对测试集的结果取平均。</li>
+<li>自助法：</li>
+</ul>
+</li>
+</ul>
+<h1 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h1><ul>
+<li>参数范数惩罚：惩罚性成本函数，正则化（回归，分类问题都可用）<ul>
+<li>$L2$正则化（$W_i$为平方，一次时为L1正则化）<ul>
+<li>$J = \frac{1}{2n}\displaystyle \sum^{n}<em>{i=1}{(\hat y_i-y_i)^2}+\lambda \displaystyle \sum^{m}</em>{j=1}{W_i^2}$  <ul>
+<li>解释：当$\lambda$取很大时要使得$J$很小则只能使某些权重$W_i$为0，从而降低模型的复杂度，防止过拟合。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据增强</li>
+<li>提前终止<ul>
+<li>（对检验样本）测试时过了10个epoche（例如），损失函数不减反增则终止检验。</li>
+</ul>
+</li>
+<li>Bagging等集成方法</li>
+<li>Dropout<ul>
+<li>在每个训练的epoche时随机固定删除一部分神经元（这部分被删除的神经元保存初始参数，训练过程不修正参数）</li>
+<li>在测试网络时将删除的神经元连上</li>
+</ul>
+</li>
+<li><h2 id="动量（Momentum）"><a href="#动量（Momentum）" class="headerlink" title="动量（Momentum）"></a>动量（Momentum）</h2></li>
+</ul>
 
       
     </div>
@@ -1012,6 +1286,9 @@
 
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1076,20 +1353,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
