@@ -171,6 +171,358 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/01/25/pat%E4%B9%99%E7%BA%A71030/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="HC">
+      <meta itemprop="description" content="才高八里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HCs blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/25/pat%E4%B9%99%E7%BA%A71030/" class="post-title-link" itemprop="url">PAT乙级1030完美数列</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-25 11:56:41" itemprop="dateCreated datePublished" datetime="2021-01-25T11:56:41+08:00">2021-01-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-03 17:27:59" itemprop="dateModified" datetime="2021-04-03T17:27:59+08:00">2021-04-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PAT-%E4%B9%99%E7%BA%A7/" itemprop="url" rel="index"><span itemprop="name">PAT 乙级</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><a href="#1-%E9%A2%98%E7%9B%AE">1. 题目</a></li>
+<li><a href="#2-%E6%80%9D%E8%B7%AF">2. 思路</a></li>
+<li><a href="#3-%E6%B3%A8%E6%84%8F">3. 注意</a></li>
+<li><a href="#4-code">4. code</a></li>
+</ul>
+<h1 id="1-题目"><a href="#1-题目" class="headerlink" title="1. 题目"></a>1. 题目</h1><p>给定一个正整数数列，和正整数p，设这个数列中的最大值是M，最小值是m，如果M &lt;= m * p，则称这个数列是完美数列。<br>现在给定参数p和一些正整数，请你从中选择尽可能多的数构成一个完美数列。<br>输入格式：<br>输入第一行给出两个正整数N和p，其中N（&lt;= 10^5）是输入的正整数的个数，p（&lt;= 10^9）是给定的参数。第二行给出N个正整数，每个数不超过10^9。<br>输出格式：<br>在一行中输出最多可以选择多少个数可以用它们组成一个完美数列。</p>
+<p>输入样例：<br>10 8<br>2 3 20 4 5 1 6 7 8 9</p>
+<p>输出样例：<br>8</p>
+<h1 id="2-思路"><a href="#2-思路" class="headerlink" title="2. 思路"></a>2. 思路</h1><p>首先将数列从小到大排序，设当前结果为max = 1，当前最长长度为temp = 1；从i = 0～n，j从i + max到n，【因为是为了找最大的max，所以下一次j只要从i的max个后面开始找】每次计算temp若大于max则更新max，最后输出max的值</p>
+<h1 id="3-注意"><a href="#3-注意" class="headerlink" title="3. 注意"></a>3. 注意</h1><ul>
+<li>m*p有可能超出int表示范围 用long long声明p</li>
+<li>采用相当于滑动窗口的形式减少查找次数</li>
+</ul>
+<h1 id="4-code"><a href="#4-code" class="headerlink" title="4. code"></a>4. code</h1><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//错误示范 未考虑注意中的两点</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> n,p;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;p;</span><br><span class="line">    <span class="keyword">int</span> a[n];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    {</span><br><span class="line">        cin&gt;&gt;a[i];</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">sort</span>(a, a+n);</span><br><span class="line">    <span class="keyword">int</span> max = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">int</span> temp = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;n;j++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(a[i]*p &lt; a[j]) <span class="keyword">break</span>;</span><br><span class="line">            temp++;</span><br><span class="line">            <span class="keyword">if</span>(temp&gt;max) max = temp;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    cout&lt;&lt;max&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><img src="https://res.cloudinary.com/dq1yc7tiz/image/upload/v1612534485/PAT%E4%B9%99%E7%BA%A7/PAT%E4%B9%99%E7%BA%A71030_%E9%94%99%E8%AF%AF_az3mma.png" alt="PAT乙级1030"></p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//AC代码</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> p; <span class="comment">//long long</span></span><br><span class="line">    cin&gt;&gt;n&gt;&gt;p;</span><br><span class="line">    <span class="keyword">int</span> a[n];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    {</span><br><span class="line">        cin&gt;&gt;a[i];</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">sort</span>(a, a+n);</span><br><span class="line">    <span class="keyword">int</span> max = <span class="number">1</span>,temp = <span class="number">1</span>; <span class="comment">//temp不能放进单层循环内</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i+max;j&lt;n;j++) <span class="comment">//是max不是temp</span></span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(a[i]*p &lt; a[j]) <span class="keyword">break</span>;</span><br><span class="line">            temp++;</span><br><span class="line">            <span class="keyword">if</span>(temp&gt;max) max = temp;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    cout&lt;&lt;max&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/01/25/pat%E7%94%B2%E7%BA%A71002/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="HC">
+      <meta itemprop="description" content="才高八里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HCs blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/25/pat%E7%94%B2%E7%BA%A71002/" class="post-title-link" itemprop="url">PAT甲级1002多项式相加</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-25 11:56:41" itemprop="dateCreated datePublished" datetime="2021-01-25T11:56:41+08:00">2021-01-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-03 18:30:20" itemprop="dateModified" datetime="2021-04-03T18:30:20+08:00">2021-04-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PAT-%E7%94%B2%E7%BA%A7/" itemprop="url" rel="index"><span itemprop="name">PAT 甲级</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><a href="#1-input">1. Input</a></li>
+<li><a href="#2-output">2. Output</a></li>
+<li><a href="#3-sample-input">3. Sample Input</a></li>
+<li><a href="#4-sample-output">4. Sample Output</a></li>
+<li><a href="#5-%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">5. 题目大意</a></li>
+<li><a href="#6-%E5%88%86%E6%9E%90">6. 分析</a></li>
+<li><a href="#7-code">7. Code</a></li>
+</ul>
+<p>This time, you are supposed to find A+B where A and B are two polynomials.</p>
+<h3 id="1-Input"><a href="#1-Input" class="headerlink" title="1. Input"></a>1. Input</h3><p>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial: K N1 aN1 N2 aN2 … NK aNK, where K is the number of nonzero terms in the polynomial, Ni and aNi (i=1, 2, …, K) are the exponents and coefficients, respectively. It is given that 1 &lt;= K &lt;= 10，0 &lt;= NK &lt; … &lt; N2 &lt; N1 &lt;=1000.</p>
+<h3 id="2-Output"><a href="#2-Output" class="headerlink" title="2. Output"></a>2. Output</h3><p>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.</p>
+<h3 id="3-Sample-Input"><a href="#3-Sample-Input" class="headerlink" title="3. Sample Input"></a>3. Sample Input</h3><p>2 1 2.4 0 3.2<br>2 2 1.5 1 0.5</p>
+<h3 id="4-Sample-Output"><a href="#4-Sample-Output" class="headerlink" title="4. Sample Output"></a>4. Sample Output</h3><p>3 2 1.5 1 2.9 0 3.2</p>
+<h3 id="5-题目大意"><a href="#5-题目大意" class="headerlink" title="5. 题目大意"></a>5. 题目大意</h3><p>计算多项式A+B的和</p>
+<h3 id="6-分析"><a href="#6-分析" class="headerlink" title="6. 分析"></a>6. 分析</h3><p>设立c数组，长度为指数的最大值，c[i] = j表示指数i的系数为j，接收a和b输入的同时将对应指数的系数加入到c中，累计c中所有非零系数的个数，然后从后往前输出所有系数不为0的指数和系数</p>
+<h3 id="7-Code"><a href="#7-Code" class="headerlink" title="7. Code"></a>7. Code</h3><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  PAT 甲 1002A+B多项式.cpp</span></span><br><span class="line"><span class="comment">//  Fushi</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by H C on 2021/2/5.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> a[<span class="number">1010</span>]={<span class="number">0</span>};</span><br><span class="line"><span class="keyword">double</span> b[<span class="number">1010</span>]={<span class="number">0</span>};</span><br><span class="line"><span class="keyword">double</span> c[<span class="number">1010</span>]={<span class="number">0</span>};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> K1,K2;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K1);</span><br><span class="line">    <span class="keyword">while</span> (K1--) {</span><br><span class="line">        <span class="keyword">int</span> N;</span><br><span class="line">        <span class="keyword">double</span> A;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %lf"</span>,&amp;N,&amp;A);</span><br><span class="line">        a[N] = A;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K2);</span><br><span class="line">    <span class="keyword">while</span> (K2--) {</span><br><span class="line">        <span class="keyword">int</span> N;</span><br><span class="line">        <span class="keyword">double</span> B;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %lf"</span>,&amp;N,&amp;B);</span><br><span class="line">        b[N] = B;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">1010</span>; i++)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (a[i]!=<span class="number">0</span>||b[i]!=<span class="number">0</span>) {</span><br><span class="line">            c[i] = a[i]+b[i];</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1010</span>; i&gt;=<span class="number">0</span>; i--) {</span><br><span class="line">        <span class="keyword">if</span>(c[i]!=<span class="number">0</span>) count++;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,count);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1010</span>; i&gt;=<span class="number">0</span>; i--) {</span><br><span class="line">        <span class="keyword">if</span> (c[i]!=<span class="number">0</span>) {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">" %d %.1lf"</span>,i,c[i]);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/01/25/%E5%95%86%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%901/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="HC">
+      <meta itemprop="description" content="才高八里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HCs blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/25/%E5%95%86%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%901/" class="post-title-link" itemprop="url">商务数据分析1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-25 11:56:41" itemprop="dateCreated datePublished" datetime="2021-01-25T11:56:41+08:00">2021-01-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 17:09:38" itemprop="dateModified" datetime="2021-04-08T17:09:38+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DL/" itemprop="url" rel="index"><span itemprop="name">DL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="参数更新方法"><a href="#参数更新方法" class="headerlink" title="参数更新方法"></a>参数更新方法</h1><ul>
+<li>若要优化损失函数得到损失函数的极小值，可对每个参数求偏导，令偏导为0，联立方程求解最优的参数。但参数多时代价太大。故采用梯度下降法不断逼近损失函数的极小值</li>
+</ul>
+<h2 id="方向导数，梯度概念"><a href="#方向导数，梯度概念" class="headerlink" title="方向导数，梯度概念"></a>方向导数，梯度概念</h2><img src="https://res.cloudinary.com/dq1yc7tiz/image/upload/v1617793901/deep%20learning/%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0%E5%AE%9A%E4%B9%89_dcs0ri.jpg" width="50%" height="50%">
+
+<img src="https://res.cloudinary.com/dq1yc7tiz/image/upload/v1617793857/deep%20learning/%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0%E6%8E%A8%E5%AF%BC_hu06da.jpg" width="50%" height="50%">
+
+<img src="https://res.cloudinary.com/dq1yc7tiz/image/upload/v1617793864/deep%20learning/%E6%A2%AF%E5%BA%A6%E5%AE%9A%E4%B9%89_pingu0.jpg" width="50%" height="50%">
+
+<img src="https://res.cloudinary.com/dq1yc7tiz/image/upload/v1617793865/deep%20learning/%E6%A2%AF%E5%BA%A6%E6%8E%A8%E5%AF%BC_jf4mp9.jpg" width="50%" height="50%">
+
+<h2 id="梯度下降数学推导"><a href="#梯度下降数学推导" class="headerlink" title="梯度下降数学推导"></a>梯度下降数学推导</h2><h1 id="训练方法"><a href="#训练方法" class="headerlink" title="训练方法"></a>训练方法</h1><ul>
+<li>批量训练<ul>
+<li>以所有样本为训练为一个epoch，对所有样本的loss求和后反向传播更新参数</li>
+</ul>
+</li>
+<li>随机梯度下降<ul>
+<li>随机挑一个样本训练为一个epoch，算出一个样本的loss后反向传播更新参数</li>
+</ul>
+</li>
+<li>mini batch<ul>
+<li>随机选十几个样本（打比方）训练为一个epoch，算出这十几个样本求和后的loos反向传播更新参数</li>
+</ul>
+</li>
+</ul>
+<h1 id="梯度消失"><a href="#梯度消失" class="headerlink" title="梯度消失"></a>梯度消失</h1><ul>
+<li>网络反向传播时到达靠近输入层的网络时梯度更新的值非常的小</li>
+</ul>
+<h1 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h1><ul>
+<li>Sigmod函数 (两头过于平坦，输出值域不对称，相当于没有梯度)<ul>
+<li>$Sigmod(x) = \frac{1}{1+e^{-x}}, Sigmod(x) \in (0,1)$</li>
+</ul>
+</li>
+<li>双曲正切（tanh）（两头过于平坦，输出值域对称，相当于没有梯度）<ul>
+<li>$tanh(x) = \frac{e^{x}-e^{-x}}{e^{-x}+e^{x}}, tanh(x) \in (-1,1)$</li>
+</ul>
+</li>
+<li>ReLU函数（常用，收敛速度比前两种快，计算高效）<ul>
+<li>$Relu(x) = \max{0,x} $</li>
+</ul>
+</li>
+<li>Leaky ReLU（解决死亡神经元问题）<ul>
+<li>$$f(x) = \begin{cases}<br>\alpha \ast x &amp; x &lt; 0 \<br>x &amp;x \geq 0<br>\end{cases}$$</li>
+</ul>
+</li>
+</ul>
+<h1 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h1><ul>
+<li>最小平方误差（MSE）<ul>
+<li>$MSE = \frac{1}{2n}\displaystyle \sum^{n}_{i=1}{(\hat y_i-y_i)^2}$</li>
+</ul>
+</li>
+<li>交叉熵(二分类问题,也可以用于[0,1]区间的回归问题)<ul>
+<li>$$J(w) = -\frac{1}{N}\displaystyle \sum^{N}_{n=1}{y_nlog{\hat{y_n}}+(1-y_n)log(1-\hat y_n)}$$<ul>
+<li>($y_n$为第n个样本的真值，$\hat y_n$为第n个样本的预测值)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="学习率"><a href="#学习率" class="headerlink" title="学习率"></a>学习率</h1><ul>
+<li>基于经验手动调</li>
+<li>固定学习率</li>
+<li>动量法动态调整</li>
+<li>随机梯度下降</li>
+<li>Adam自动调整</li>
+</ul>
+<h1 id="评估方法"><a href="#评估方法" class="headerlink" title="评估方法"></a>评估方法</h1><ul>
+<li>使用测试集（尽可能与训练集互斥进行泛化误差的估计）<ul>
+<li>留出法：将数据姐划分一部分做测试集一部分做训练集，测试集与训练集正负样本分布尽可能均匀。常见将$\frac{2}{3}-\frac{4}{5}$的数据集作为训练集。可多次留出，对测试集结果取平均。</li>
+<li>交叉验证法：如十折交叉验证，分10份，9训练1测试，进行10次测试，每次测试集合两两不同，对测试集的结果取平均。</li>
+<li>自助法：</li>
+</ul>
+</li>
+</ul>
+<h1 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h1><ul>
+<li>参数范数惩罚：惩罚性成本函数，正则化（回归，分类问题都可用）<ul>
+<li>$L2$正则化（$W_i$为平方，一次时为L1正则化）<ul>
+<li>$J = \frac{1}{2n}\displaystyle \sum^{n}<em>{i=1}{(\hat y_i-y_i)^2}+\lambda \displaystyle \sum^{m}</em>{j=1}{W_i^2}$  <ul>
+<li>解释：当$\lambda$取很大时要使得$J$很小则只能使某些权重$W_i$为0，从而降低模型的复杂度，防止过拟合。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据增强</li>
+<li>提前终止<ul>
+<li>（对检验样本）测试时过了10个epoche（例如），损失函数不减反增则终止检验。</li>
+</ul>
+</li>
+<li>Bagging等集成方法</li>
+<li>Dropout<ul>
+<li>在每个训练的epoche时随机固定删除一部分神经元（这部分被删除的神经元保存初始参数，训练过程不修正参数）</li>
+<li>在测试网络时将删除的神经元连上</li>
+</ul>
+</li>
+<li><h2 id="动量（Momentum）"><a href="#动量（Momentum）" class="headerlink" title="动量（Momentum）"></a>动量（Momentum）</h2></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://csberlin.github.io/2021/01/25/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -302,20 +654,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
