@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"csberlin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"csberlin.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1. Question 1.1. Input Specification: 1.2. Output Specification 1.3. Sample Input 1.4. Sample Output   2. Thinking 3. code  1. QuestionAt the beginning of every day, the first person who signs in the">
+  <meta name="description" content="QuestionAt the beginning of every day, the first person who signs in the computer room will unlock the door, and the last one who signs out will lock the door. Given the records of signing in’s and ou">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PAT甲级1006">
 <meta property="og:url" content="https://csberlin.github.io/2021/02/01/pat%E7%94%B2%E7%BA%A71006/index.html">
 <meta property="og:site_name" content="HCs blog">
-<meta property="og:description" content="1. Question 1.1. Input Specification: 1.2. Output Specification 1.3. Sample Input 1.4. Sample Output   2. Thinking 3. code  1. QuestionAt the beginning of every day, the first person who signs in the">
+<meta property="og:description" content="QuestionAt the beginning of every day, the first person who signs in the computer room will unlock the door, and the last one who signs out will lock the door. Given the records of signing in’s and ou">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-01T03:56:41.000Z">
-<meta property="article:modified_time" content="2021-04-03T10:32:19.929Z">
+<meta property="article:modified_time" content="2021-05-05T02:36:26.732Z">
 <meta property="article:author" content="HC">
 <meta property="article:tag" content="时间哈希">
 <meta name="twitter:card" content="summary">
@@ -85,7 +85,7 @@
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
-
+    <a target="_blank" rel="noopener" href="https://github.com/CSberlin"><img style="position:absolute;top:0;right:0;border:0;" loading="lazy" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
@@ -205,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-03 18:32:19" itemprop="dateModified" datetime="2021-04-03T18:32:19+08:00">2021-04-03</time>
+                <time title="修改时间：2021-05-05 10:36:26" itemprop="dateModified" datetime="2021-05-05T10:36:26+08:00">2021-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,7 +217,21 @@
                 </span>
             </span>
 
-          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
 
         </div>
       </header>
@@ -228,27 +242,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
-<li><a href="#1-question">1. Question</a><ul>
-<li><a href="#11-input-specification">1.1. Input Specification:</a></li>
-<li><a href="#12-output-specification">1.2. Output Specification</a></li>
-<li><a href="#13-sample-input">1.3. Sample Input</a></li>
-<li><a href="#14-sample-output">1.4. Sample Output</a></li>
-</ul>
-</li>
-<li><a href="#2-thinking">2. Thinking</a></li>
-<li><a href="#3-code">3. code</a></li>
-</ul>
-<h1 id="1-Question"><a href="#1-Question" class="headerlink" title="1. Question"></a>1. Question</h1><p>At the beginning of every day, the first person who signs in the computer room will unlock the door, and the last one who signs out will lock the door. Given the records of signing in’s and out’s, you are supposed to find the ones who have unlocked and locked the door on that day.</p>
-<h2 id="1-1-Input-Specification"><a href="#1-1-Input-Specification" class="headerlink" title="1.1. Input Specification:"></a>1.1. Input Specification:</h2><p>Each input file contains one test case. Each case contains the records for one day. The case starts with a positive integer M, which is the total number of records, followed by M lines, each in the format:</p>
+        <h1 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h1><p>At the beginning of every day, the first person who signs in the computer room will unlock the door, and the last one who signs out will lock the door. Given the records of signing in’s and out’s, you are supposed to find the ones who have unlocked and locked the door on that day.</p>
+<span id="more"></span>
+
+<h2 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h2><p>Each input file contains one test case. Each case contains the records for one day. The case starts with a positive integer M, which is the total number of records, followed by M lines, each in the format:</p>
 <p>ID_number Sign_in_time Sign_out_time</p>
 <p>where times are given in the format HH:MM:SS, and ID_number is a string with no more than 15 characters.</p>
-<h2 id="1-2-Output-Specification"><a href="#1-2-Output-Specification" class="headerlink" title="1.2. Output Specification"></a>1.2. Output Specification</h2><p>For each test case, output in one line the ID numbers of the persons who have unlocked and locked the door on that day. The two ID numbers must be separated by one space.</p>
+<h2 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification"></a>Output Specification</h2><p>For each test case, output in one line the ID numbers of the persons who have unlocked and locked the door on that day. The two ID numbers must be separated by one space.</p>
 <p>Note: It is guaranteed that the records are consistent. That is, the sign in time must be earlier than the sign out time for each person, and there are no two persons sign in or out at the same moment.</p>
-<h2 id="1-3-Sample-Input"><a href="#1-3-Sample-Input" class="headerlink" title="1.3. Sample Input"></a>1.3. Sample Input</h2><p>3<br>CS301111 15:30:28 17:00:10<br>SC3021234 08:00:00 11:25:25<br>CS301133 21:45:00 21:58:40</p>
-<h2 id="1-4-Sample-Output"><a href="#1-4-Sample-Output" class="headerlink" title="1.4. Sample Output"></a>1.4. Sample Output</h2><p>SC3021234 CS301133</p>
-<h1 id="2-Thinking"><a href="#2-Thinking" class="headerlink" title="2. Thinking"></a>2. Thinking</h1><p>时间哈希</p>
-<h1 id="3-code"><a href="#3-code" class="headerlink" title="3. code"></a>3. code</h1><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  PAT甲级1006.cpp</span></span><br><span class="line"><span class="comment">//  Fushi</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by H C on 2021/2/6.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> N;</span><br><span class="line">    <span class="keyword">char</span> id[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">char</span> earid[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">char</span> lateid[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">int</span> eartime = <span class="number">86400</span>;</span><br><span class="line">    <span class="keyword">int</span> latetime = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</span><br><span class="line"><span class="comment">//    scanf后面如果接</span></span><br><span class="line"><span class="comment">//    getchar();</span></span><br><span class="line">    <span class="keyword">while</span> (N--) {</span><br><span class="line">        <span class="keyword">int</span> h1,m1,s1,h2,m2,s2;</span><br><span class="line"><span class="comment">//        不能用gets 不然把后面的数字也读到字符数组里了</span></span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s %d:%d:%d %d:%d:%d"</span>,id,&amp;h1,&amp;m1,&amp;s1,&amp;h2,&amp;m2,&amp;s2);</span><br><span class="line">        <span class="keyword">int</span> tmp1 = <span class="number">3600</span>*h1+m1*<span class="number">60</span>+s1;</span><br><span class="line">        <span class="keyword">int</span> tmp2 = <span class="number">3600</span>*h2+m2*<span class="number">60</span>+s2;</span><br><span class="line">        <span class="keyword">if</span>(tmp1&lt;eartime) {eartime = tmp1;<span class="built_in">strcpy</span>(earid,id);}</span><br><span class="line">        <span class="keyword">if</span>(tmp2&gt;latetime) {latetime = tmp2;<span class="built_in">strcpy</span>(lateid,id);}</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s %s"</span>,earid,lateid);</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input"></a>Sample Input</h2><p>3<br>CS301111 15:30:28 17:00:10<br>SC3021234 08:00:00 11:25:25<br>CS301133 21:45:00 21:58:40</p>
+<h2 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output"></a>Sample Output</h2><p>SC3021234 CS301133</p>
+<h1 id="Thinking"><a href="#Thinking" class="headerlink" title="Thinking"></a>Thinking</h1><p>时间哈希</p>
+<h1 id="code"><a href="#code" class="headerlink" title="code"></a>code</h1><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  PAT甲级1006.cpp</span></span><br><span class="line"><span class="comment">//  Fushi</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by H C on 2021/2/6.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> N;</span><br><span class="line">    <span class="keyword">char</span> id[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">char</span> earid[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">char</span> lateid[<span class="number">16</span>];</span><br><span class="line">    <span class="keyword">int</span> eartime = <span class="number">86400</span>;</span><br><span class="line">    <span class="keyword">int</span> latetime = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</span><br><span class="line"><span class="comment">//    scanf后面如果接</span></span><br><span class="line"><span class="comment">//    getchar();</span></span><br><span class="line">    <span class="keyword">while</span> (N--) {</span><br><span class="line">        <span class="keyword">int</span> h1,m1,s1,h2,m2,s2;</span><br><span class="line"><span class="comment">//        不能用gets 不然把后面的数字也读到字符数组里了</span></span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s %d:%d:%d %d:%d:%d"</span>,id,&amp;h1,&amp;m1,&amp;s1,&amp;h2,&amp;m2,&amp;s2);</span><br><span class="line">        <span class="keyword">int</span> tmp1 = <span class="number">3600</span>*h1+m1*<span class="number">60</span>+s1;</span><br><span class="line">        <span class="keyword">int</span> tmp2 = <span class="number">3600</span>*h2+m2*<span class="number">60</span>+s2;</span><br><span class="line">        <span class="keyword">if</span>(tmp1&lt;eartime) {eartime = tmp1;<span class="built_in">strcpy</span>(earid,id);}</span><br><span class="line">        <span class="keyword">if</span>(tmp2&gt;latetime) {latetime = tmp2;<span class="built_in">strcpy</span>(lateid,id);}</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s %s"</span>,earid,lateid);</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
     </div>
 
     
@@ -331,7 +336,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Question"><span class="nav-number">1.</span> <span class="nav-text">1. Question</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Input-Specification"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. Input Specification:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Output-Specification"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. Output Specification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Sample-Input"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. Sample Input</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-Sample-Output"><span class="nav-number">1.4.</span> <span class="nav-text">1.4. Sample Output</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Thinking"><span class="nav-number">2.</span> <span class="nav-text">2. Thinking</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-code"><span class="nav-number">3.</span> <span class="nav-text">3. code</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Question"><span class="nav-number">1.</span> <span class="nav-text">Question</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Input-Specification"><span class="nav-number">1.1.</span> <span class="nav-text">Input Specification:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Output-Specification"><span class="nav-number">1.2.</span> <span class="nav-text">Output Specification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sample-Input"><span class="nav-number">1.3.</span> <span class="nav-text">Sample Input</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sample-Output"><span class="nav-number">1.4.</span> <span class="nav-text">Sample Output</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Thinking"><span class="nav-number">2.</span> <span class="nav-text">Thinking</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#code"><span class="nav-number">3.</span> <span class="nav-text">code</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -345,20 +350,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -390,8 +395,20 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">HC</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">NaN:aN</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -417,7 +434,7 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
 <script src="/js/next-boot.js"></script>

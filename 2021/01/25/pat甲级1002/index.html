@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"csberlin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"csberlin.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1. Input 2. Output 3. Sample Input 4. Sample Output 5. 题目大意 6. 分析 7. Code  This time, you are supposed to find A+B where A and B are two polynomials. 1. InputEach input file contains one test case. E">
+  <meta name="description" content="This time, you are supposed to find A+B where A and B are two polynomials.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PAT甲级1002多项式相加">
 <meta property="og:url" content="https://csberlin.github.io/2021/01/25/pat%E7%94%B2%E7%BA%A71002/index.html">
 <meta property="og:site_name" content="HCs blog">
-<meta property="og:description" content="1. Input 2. Output 3. Sample Input 4. Sample Output 5. 题目大意 6. 分析 7. Code  This time, you are supposed to find A+B where A and B are two polynomials. 1. InputEach input file contains one test case. E">
+<meta property="og:description" content="This time, you are supposed to find A+B where A and B are two polynomials.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-01-25T03:56:41.000Z">
-<meta property="article:modified_time" content="2021-04-03T10:30:20.497Z">
+<meta property="article:modified_time" content="2021-05-05T02:35:55.446Z">
 <meta property="article:author" content="HC">
 <meta property="article:tag" content="多项式">
 <meta name="twitter:card" content="summary">
@@ -85,7 +85,7 @@
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
-
+    <a target="_blank" rel="noopener" href="https://github.com/CSberlin"><img style="position:absolute;top:0;right:0;border:0;" loading="lazy" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
@@ -205,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-03 18:30:20" itemprop="dateModified" datetime="2021-04-03T18:30:20+08:00">2021-04-03</time>
+                <time title="修改时间：2021-05-05 10:35:55" itemprop="dateModified" datetime="2021-05-05T10:35:55+08:00">2021-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,7 +217,21 @@
                 </span>
             </span>
 
-          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
 
         </div>
       </header>
@@ -228,23 +242,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
-<li><a href="#1-input">1. Input</a></li>
-<li><a href="#2-output">2. Output</a></li>
-<li><a href="#3-sample-input">3. Sample Input</a></li>
-<li><a href="#4-sample-output">4. Sample Output</a></li>
-<li><a href="#5-%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">5. 题目大意</a></li>
-<li><a href="#6-%E5%88%86%E6%9E%90">6. 分析</a></li>
-<li><a href="#7-code">7. Code</a></li>
-</ul>
-<p>This time, you are supposed to find A+B where A and B are two polynomials.</p>
-<h3 id="1-Input"><a href="#1-Input" class="headerlink" title="1. Input"></a>1. Input</h3><p>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial: K N1 aN1 N2 aN2 … NK aNK, where K is the number of nonzero terms in the polynomial, Ni and aNi (i=1, 2, …, K) are the exponents and coefficients, respectively. It is given that 1 &lt;= K &lt;= 10，0 &lt;= NK &lt; … &lt; N2 &lt; N1 &lt;=1000.</p>
-<h3 id="2-Output"><a href="#2-Output" class="headerlink" title="2. Output"></a>2. Output</h3><p>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.</p>
-<h3 id="3-Sample-Input"><a href="#3-Sample-Input" class="headerlink" title="3. Sample Input"></a>3. Sample Input</h3><p>2 1 2.4 0 3.2<br>2 2 1.5 1 0.5</p>
-<h3 id="4-Sample-Output"><a href="#4-Sample-Output" class="headerlink" title="4. Sample Output"></a>4. Sample Output</h3><p>3 2 1.5 1 2.9 0 3.2</p>
-<h3 id="5-题目大意"><a href="#5-题目大意" class="headerlink" title="5. 题目大意"></a>5. 题目大意</h3><p>计算多项式A+B的和</p>
-<h3 id="6-分析"><a href="#6-分析" class="headerlink" title="6. 分析"></a>6. 分析</h3><p>设立c数组，长度为指数的最大值，c[i] = j表示指数i的系数为j，接收a和b输入的同时将对应指数的系数加入到c中，累计c中所有非零系数的个数，然后从后往前输出所有系数不为0的指数和系数</p>
-<h3 id="7-Code"><a href="#7-Code" class="headerlink" title="7. Code"></a>7. Code</h3><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  PAT 甲 1002A+B多项式.cpp</span></span><br><span class="line"><span class="comment">//  Fushi</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by H C on 2021/2/5.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> a[<span class="number">1010</span>]={<span class="number">0</span>};</span><br><span class="line"><span class="keyword">double</span> b[<span class="number">1010</span>]={<span class="number">0</span>};</span><br><span class="line"><span class="keyword">double</span> c[<span class="number">1010</span>]={<span class="number">0</span>};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> K1,K2;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K1);</span><br><span class="line">    <span class="keyword">while</span> (K1--) {</span><br><span class="line">        <span class="keyword">int</span> N;</span><br><span class="line">        <span class="keyword">double</span> A;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %lf"</span>,&amp;N,&amp;A);</span><br><span class="line">        a[N] = A;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K2);</span><br><span class="line">    <span class="keyword">while</span> (K2--) {</span><br><span class="line">        <span class="keyword">int</span> N;</span><br><span class="line">        <span class="keyword">double</span> B;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %lf"</span>,&amp;N,&amp;B);</span><br><span class="line">        b[N] = B;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">1010</span>; i++)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (a[i]!=<span class="number">0</span>||b[i]!=<span class="number">0</span>) {</span><br><span class="line">            c[i] = a[i]+b[i];</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1010</span>; i&gt;=<span class="number">0</span>; i--) {</span><br><span class="line">        <span class="keyword">if</span>(c[i]!=<span class="number">0</span>) count++;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,count);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1010</span>; i&gt;=<span class="number">0</span>; i--) {</span><br><span class="line">        <span class="keyword">if</span> (c[i]!=<span class="number">0</span>) {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">" %d %.1lf"</span>,i,c[i]);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+        <p>This time, you are supposed to find A+B where A and B are two polynomials.</p>
+<span id="more"></span>
+<h1 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h1><p>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial: K N1 aN1 N2 aN2 … NK aNK, where K is the number of nonzero terms in the polynomial, Ni and aNi (i=1, 2, …, K) are the exponents and coefficients, respectively. It is given that 1 &lt;= K &lt;= 10，0 &lt;= NK &lt; … &lt; N2 &lt; N1 &lt;=1000.</p>
+<h1 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h1><p>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.</p>
+<h1 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input"></a>Sample Input</h1><p>2 1 2.4 0 3.2<br>2 2 1.5 1 0.5</p>
+<h1 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output"></a>Sample Output</h1><p>3 2 1.5 1 2.9 0 3.2</p>
+<h1 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h1><p>计算多项式A+B的和</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>设立c数组，长度为指数的最大值，c[i] = j表示指数i的系数为j，接收a和b输入的同时将对应指数的系数加入到c中，累计c中所有非零系数的个数，然后从后往前输出所有系数不为0的指数和系数</p>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  PAT 甲 1002A+B多项式.cpp</span></span><br><span class="line"><span class="comment">//  Fushi</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by H C on 2021/2/5.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> a[<span class="number">1010</span>]={<span class="number">0</span>};</span><br><span class="line"><span class="keyword">double</span> b[<span class="number">1010</span>]={<span class="number">0</span>};</span><br><span class="line"><span class="keyword">double</span> c[<span class="number">1010</span>]={<span class="number">0</span>};</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> K1,K2;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K1);</span><br><span class="line">    <span class="keyword">while</span> (K1--) {</span><br><span class="line">        <span class="keyword">int</span> N;</span><br><span class="line">        <span class="keyword">double</span> A;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %lf"</span>,&amp;N,&amp;A);</span><br><span class="line">        a[N] = A;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K2);</span><br><span class="line">    <span class="keyword">while</span> (K2--) {</span><br><span class="line">        <span class="keyword">int</span> N;</span><br><span class="line">        <span class="keyword">double</span> B;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %lf"</span>,&amp;N,&amp;B);</span><br><span class="line">        b[N] = B;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">1010</span>; i++)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (a[i]!=<span class="number">0</span>||b[i]!=<span class="number">0</span>) {</span><br><span class="line">            c[i] = a[i]+b[i];</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1010</span>; i&gt;=<span class="number">0</span>; i--) {</span><br><span class="line">        <span class="keyword">if</span>(c[i]!=<span class="number">0</span>) count++;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,count);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1010</span>; i&gt;=<span class="number">0</span>; i--) {</span><br><span class="line">        <span class="keyword">if</span> (c[i]!=<span class="number">0</span>) {</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">" %d %.1lf"</span>,i,c[i]);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 
     </div>
@@ -264,8 +270,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/25/%E5%95%86%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%901/" rel="prev" title="商务数据分析1">
-      <i class="fa fa-chevron-left"></i> 商务数据分析1
+    <a href="/2021/01/25/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A01-%E5%85%A8%E8%BF%9E%E6%8E%A5/" rel="prev" title="深度学习1-全连接">
+      <i class="fa fa-chevron-left"></i> 深度学习1-全连接
     </a></div>
       <div class="post-nav-item">
     <a href="/2021/01/25/pat%E4%B9%99%E7%BA%A71030/" rel="next" title="PAT乙级1030完美数列">
@@ -329,7 +335,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Input"><span class="nav-number">1.</span> <span class="nav-text">1. Input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Output"><span class="nav-number">2.</span> <span class="nav-text">2. Output</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Sample-Input"><span class="nav-number">3.</span> <span class="nav-text">3. Sample Input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Sample-Output"><span class="nav-number">4.</span> <span class="nav-text">4. Sample Output</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F"><span class="nav-number">5.</span> <span class="nav-text">5. 题目大意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">6. 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Code"><span class="nav-number">7.</span> <span class="nav-text">7. Code</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Input"><span class="nav-number">1.</span> <span class="nav-text">Input</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Output"><span class="nav-number">2.</span> <span class="nav-text">Output</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sample-Input"><span class="nav-number">3.</span> <span class="nav-text">Sample Input</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sample-Output"><span class="nav-number">4.</span> <span class="nav-text">Sample Output</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F"><span class="nav-number">5.</span> <span class="nav-text">题目大意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code"><span class="nav-number">7.</span> <span class="nav-text">Code</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -343,20 +349,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -388,8 +394,20 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">HC</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">NaN:aN</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -415,7 +433,7 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
