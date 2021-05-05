@@ -128,6 +128,30 @@
   </entry>
   
   <entry>
+    <title>深度学习3-卷积</title>
+    <link href="https://csberlin.github.io/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A03-%E5%8D%B7%E7%A7%AF/"/>
+    <id>https://csberlin.github.io/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A03-%E5%8D%B7%E7%A7%AF/</id>
+    <published>2021-04-18T13:56:04.000Z</published>
+    <updated>2021-05-05T02:38:52.968Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="全连接网络"><a href="#全连接网络" class="headerlink" title="全连接网络"></a>全连接网络</h1><ul><li><p>缺点：层与层之间参数过多，计算量大，内存有限</p><h1 id="卷积定义"><a href="#卷积定义" class="headerlink" title="卷积定义"></a>卷积定义</h1></li><li><p>最早在信号处理里提出（对应元素相乘后求和）</p><span id="more"></span></li><li><p>连续函数 (先将函数$g(x)$进行对$y$轴反转，为$g(-x)$然后平移n个单位n每次增加)</p><ul><li>$y[n]=\int^{+\infty}_{-\infty}{f(x)}{g(n-x)}dx$</li></ul></li><li><p>离散函数(g函数相当于核函数，即滤波器)</p><ul><li>$y[n]=\displaystyle\sum_{m={-\infty}}^{+\infty}f(m)g(n-m)$</li></ul></li></ul><h1 id="卷积网络"><a href="#卷积网络" class="headerlink" title="卷积网络"></a>卷积网络</h1><ul><li><p>对维度高的特征进行压缩提取，并且大大降低特征维度</p></li><li><p>二维：shape计算</p><ul><li>${n_{out} = {[\frac{n_{in}+2p-f}{s}+1]}}$<ul><li>$n_{in}为输入尺寸，p为padding层数，f为卷积核大小，s为步长$</li></ul></li></ul></li><li><p>二维channel=总共有多少个filter（卷积核）</p></li><li><p>三维卷积（<strong>输出一下三维卷积和多通道卷积的网络参数个数</strong>）</p><ul><li>多了深度通道，<strong>这个深度可能是视频上的连续帧</strong>，也可能是<strong>立体图像中的不同切片</strong></li></ul></li><li><p>多通道卷积（没特殊强调都是多通道卷积）</p><ul><li>多通道卷积<strong>不同的通道上的卷积核的参数是不同的</strong>，而3D卷积则由于卷积核本身是3D的，所以这个由于“深度”造成的看似不同通道上用的就是同一个卷积，权重共享。</li></ul></li><li><p>共享权重和连接</p><ul><li>对于同一个通道（对应一个卷积核）权重和偏置是共享的</li><li>如二维：对于同一个5 * 5的卷积核，共有25个参数，对应25条连线，则生成一个通道内共有25+1个参数，如果有6个卷积核生成6个通道，则这层卷积有（25+1）* 6个参数，但连接有(25+1) * 6 <em>(28 <em>28)。</em></em>可以看到多连接，少参数**</li></ul></li></ul><h1 id="空洞卷积"><a href="#空洞卷积" class="headerlink" title="空洞卷积"></a>空洞卷积</h1><ul><li><p>当网络层需要较大的感受野，但计算资源有限而无法提高卷积核数量或大小时，可以考虑空洞卷积。</p></li><li><p>Model.summary()输出</p><ul><li>(batchSize, height, width, channels)，其中None值为任意尺寸<ul><li><code>如(None, None, None, 3)</code>，允许可变图像大小。</li></ul></li></ul></li></ul><h1 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h1><ul><li>平均池化</li><li>最大池化</li><li>池化输出尺寸计算与卷积相同<ul><li>共享权重和连接<ul><li>和卷积不同，如2 * 2的池化单元，对应4条连线，但只有一个参数。一个通道共享偏置，则一个通道内共有2个参数，生成6个通道则共有2 * 6个参数。连线有（2 * 2 +1） * 6 * （14 * 14）</li></ul></li></ul></li></ul><h1 id="上采样"><a href="#上采样" class="headerlink" title="上采样"></a>上采样</h1><ul><li><p>双线性差值上采样</p><blockquote><p>单线性插值（一个方向上）就是想知道$y$对应$x$的值，已知$x_1,x_2$的$y$值可将位于$x$两侧$x_1,x_2$的点连成一条直线，来确定中间的点$x$对应的y值</p><p>双线性差值 假设我们想得到函数$f$在点$P(x,y)$的值，假设知道函数$f$在点$Q_{11}=(x_1,y_1),Q_{12}=(x_1,y_2),Q_{21}=(x_2,y_1),Q_{22}=(x_2,y_2)$的值</p><p>先在$x$方向进行差值 </p><p>$f(R_1) \approx \frac{x_2-x}{x_2-x_1}f(Q_{11})+\frac{x-x_1}{x_2-x_1}f(Q_{21}),\qquad R_1=(x,y1)$ </p><p>$f(R_2) \approx \frac{x_2-x}{x_2-x_1}f(Q_{12})+\frac{x-x_1}{x_2-x_1}f(Q_{22}),\qquad R_2=(x,y2)$</p><p>再对$y$方向进行差值</p><p>$f(P) \approx \frac{y_2-y}{y_2-y_1}f(R1)+\frac{y-y_1}{y_2-y_1}f(R_{2})$</p><p>最常见的情况，$f$就是一个像素点的像素值。</p></blockquote></li><li><p>三次内插法</p></li><li><p>Transform Conv(并非反卷积，反卷积为卷积的数学逆操作，而Transform本质仍是卷积)</p><blockquote><p>在每个像素周围补0，然后用卷积核操作得到输出</p></blockquote></li><li><p>反池化</p><blockquote><p>为了进行反池化操作，我们还需额外把（编码器中的）最大池化层的索引都存储起来(即下采样时最大池化选取值所在的位置)，用于之后（解码器中的）的反池化操作。恢复到原始尺寸，将数据映射到索引处，其它地方填充零。</p></blockquote></li></ul><blockquote><p>这样尽管会忽略邻近的信息，会丢弃大量低频信息，但是它有助于保持高频信息的完整性。</p><ol><li>减少了进行端到端训练的参数量。</li><li>对max-pooling来说，它可以提高边界的勾画，即突出高频信息。</li></ol><p>最大值相同地填充至一个区域内（上图中邻近的4格）或者做平均填充，那么不但不能准确地表示高频信息，又不能保证能够表达出低频信息，这就不如上面的做法能保证高频信息的完整性。</p></blockquote><blockquote><p> 双线性插值方法实现简单，无需训练；反卷积上采样需要训练，但能更好的还原特征图；反池化几本不用</p></blockquote>]]></content>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;全连接网络&quot;&gt;&lt;a href=&quot;#全连接网络&quot; class=&quot;headerlink&quot; title=&quot;全连接网络&quot;&gt;&lt;/a&gt;全连接网络&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;缺点：层与层之间参数过多，计算量大，内存有限&lt;/p&gt;
+&lt;h1 id=&quot;卷积定义&quot;&gt;&lt;a href=&quot;#卷积定义&quot; class=&quot;headerlink&quot; title=&quot;卷积定义&quot;&gt;&lt;/a&gt;卷积定义&lt;/h1&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;最早在信号处理里提出（对应元素相乘后求和）&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="DL" scheme="https://csberlin.github.io/categories/DL/"/>
+    
+    
+    <category term="DL" scheme="https://csberlin.github.io/tags/DL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>深度学习4-典型的CNN</title>
     <link href="https://csberlin.github.io/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A04-%E5%85%B8%E5%9E%8B%E7%9A%84CNN/"/>
     <id>https://csberlin.github.io/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A04-%E5%85%B8%E5%9E%8B%E7%9A%84CNN/</id>
@@ -147,30 +171,6 @@
 &lt;li&gt;通道交叉&lt;/li&gt;
 &lt;li&gt;局部响应归一化层（Local Response Normalization）, 后多采用批量归一化&lt;/li&gt;
 &lt;li&gt;重叠池化：相邻池化窗口之间有重叠部分&lt;/li&gt;&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="DL" scheme="https://csberlin.github.io/categories/DL/"/>
-    
-    
-    <category term="DL" scheme="https://csberlin.github.io/tags/DL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深度学习3-卷积</title>
-    <link href="https://csberlin.github.io/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A03-%E5%8D%B7%E7%A7%AF/"/>
-    <id>https://csberlin.github.io/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A03-%E5%8D%B7%E7%A7%AF/</id>
-    <published>2021-04-18T13:56:04.000Z</published>
-    <updated>2021-05-05T02:38:52.968Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="全连接网络"><a href="#全连接网络" class="headerlink" title="全连接网络"></a>全连接网络</h1><ul><li><p>缺点：层与层之间参数过多，计算量大，内存有限</p><h1 id="卷积定义"><a href="#卷积定义" class="headerlink" title="卷积定义"></a>卷积定义</h1></li><li><p>最早在信号处理里提出（对应元素相乘后求和）</p><span id="more"></span></li><li><p>连续函数 (先将函数$g(x)$进行对$y$轴反转，为$g(-x)$然后平移n个单位n每次增加)</p><ul><li>$y[n]=\int^{+\infty}_{-\infty}{f(x)}{g(n-x)}dx$</li></ul></li><li><p>离散函数(g函数相当于核函数，即滤波器)</p><ul><li>$y[n]=\displaystyle\sum_{m={-\infty}}^{+\infty}f(m)g(n-m)$</li></ul></li></ul><h1 id="卷积网络"><a href="#卷积网络" class="headerlink" title="卷积网络"></a>卷积网络</h1><ul><li><p>对维度高的特征进行压缩提取，并且大大降低特征维度</p></li><li><p>二维：shape计算</p><ul><li>${n_{out} = {[\frac{n_{in}+2p-f}{s}+1]}}$<ul><li>$n_{in}为输入尺寸，p为padding层数，f为卷积核大小，s为步长$</li></ul></li></ul></li><li><p>二维channel=总共有多少个filter（卷积核）</p></li><li><p>三维卷积（<strong>输出一下三维卷积和多通道卷积的网络参数个数</strong>）</p><ul><li>多了深度通道，<strong>这个深度可能是视频上的连续帧</strong>，也可能是<strong>立体图像中的不同切片</strong></li></ul></li><li><p>多通道卷积（没特殊强调都是多通道卷积）</p><ul><li>多通道卷积<strong>不同的通道上的卷积核的参数是不同的</strong>，而3D卷积则由于卷积核本身是3D的，所以这个由于“深度”造成的看似不同通道上用的就是同一个卷积，权重共享。</li></ul></li><li><p>共享权重和连接</p><ul><li>对于同一个通道（对应一个卷积核）权重和偏置是共享的</li><li>如二维：对于同一个5 * 5的卷积核，共有25个参数，对应25条连线，则生成一个通道内共有25+1个参数，如果有6个卷积核生成6个通道，则这层卷积有（25+1）* 6个参数，但连接有(25+1) * 6 <em>(28 <em>28)。</em></em>可以看到多连接，少参数**</li></ul></li></ul><h1 id="空洞卷积"><a href="#空洞卷积" class="headerlink" title="空洞卷积"></a>空洞卷积</h1><ul><li><p>当网络层需要较大的感受野，但计算资源有限而无法提高卷积核数量或大小时，可以考虑空洞卷积。</p></li><li><p>Model.summary()输出</p><ul><li>(batchSize, height, width, channels)，其中None值为任意尺寸<ul><li><code>如(None, None, None, 3)</code>，允许可变图像大小。</li></ul></li></ul></li></ul><h1 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h1><ul><li>平均池化</li><li>最大池化</li><li>池化输出尺寸计算与卷积相同<ul><li>共享权重和连接<ul><li>和卷积不同，如2 * 2的池化单元，对应4条连线，但只有一个参数。一个通道共享偏置，则一个通道内共有2个参数，生成6个通道则共有2 * 6个参数。连线有（2 * 2 +1） * 6 * （14 * 14）</li></ul></li></ul></li></ul><h1 id="上采样"><a href="#上采样" class="headerlink" title="上采样"></a>上采样</h1><ul><li><p>双线性差值上采样</p><blockquote><p>单线性插值（一个方向上）就是想知道$y$对应$x$的值，已知$x_1,x_2$的$y$值可将位于$x$两侧$x_1,x_2$的点连成一条直线，来确定中间的点$x$对应的y值</p><p>双线性差值 假设我们想得到函数$f$在点$P(x,y)$的值，假设知道函数$f$在点$Q_{11}=(x_1,y_1),Q_{12}=(x_1,y_2),Q_{21}=(x_2,y_1),Q_{22}=(x_2,y_2)$的值</p><p>先在$x$方向进行差值 </p><p>$f(R_1) \approx \frac{x_2-x}{x_2-x_1}f(Q_{11})+\frac{x-x_1}{x_2-x_1}f(Q_{21}),\qquad R_1=(x,y1)$ </p><p>$f(R_2) \approx \frac{x_2-x}{x_2-x_1}f(Q_{12})+\frac{x-x_1}{x_2-x_1}f(Q_{22}),\qquad R_2=(x,y2)$</p><p>再对$y$方向进行差值</p><p>$f(P) \approx \frac{y_2-y}{y_2-y_1}f(R1)+\frac{y-y_1}{y_2-y_1}f(R_{2})$</p><p>最常见的情况，$f$就是一个像素点的像素值。</p></blockquote></li><li><p>三次内插法</p></li><li><p>Transform Conv(并非反卷积，反卷积为卷积的数学逆操作，而Transform本质仍是卷积)</p><blockquote><p>在每个像素周围补0，然后用卷积核操作得到输出</p></blockquote></li><li><p>反池化</p><blockquote><p>为了进行反池化操作，我们还需额外把（编码器中的）最大池化层的索引都存储起来(即下采样时最大池化选取值所在的位置)，用于之后（解码器中的）的反池化操作。恢复到原始尺寸，将数据映射到索引处，其它地方填充零。</p></blockquote></li></ul><blockquote><p>这样尽管会忽略邻近的信息，会丢弃大量低频信息，但是它有助于保持高频信息的完整性。</p><ol><li>减少了进行端到端训练的参数量。</li><li>对max-pooling来说，它可以提高边界的勾画，即突出高频信息。</li></ol><p>最大值相同地填充至一个区域内（上图中邻近的4格）或者做平均填充，那么不但不能准确地表示高频信息，又不能保证能够表达出低频信息，这就不如上面的做法能保证高频信息的完整性。</p></blockquote><blockquote><p> 双线性插值方法实现简单，无需训练；反卷积上采样需要训练，但能更好的还原特征图；反池化几本不用</p></blockquote>]]></content>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;全连接网络&quot;&gt;&lt;a href=&quot;#全连接网络&quot; class=&quot;headerlink&quot; title=&quot;全连接网络&quot;&gt;&lt;/a&gt;全连接网络&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;缺点：层与层之间参数过多，计算量大，内存有限&lt;/p&gt;
-&lt;h1 id=&quot;卷积定义&quot;&gt;&lt;a href=&quot;#卷积定义&quot; class=&quot;headerlink&quot; title=&quot;卷积定义&quot;&gt;&lt;/a&gt;卷积定义&lt;/h1&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;最早在信号处理里提出（对应元素相乘后求和）&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</summary>
     
     
     
