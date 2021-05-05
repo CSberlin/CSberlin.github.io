@@ -6,7 +6,24 @@
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>抱着想写点什么记录考研的心态，也应某朋友的要求写下这个经验贴。</p>
 <p>看完不求点赞转发，如果能从我的经历中获得什么，我会感到开心和欣慰。</p>
 <span id="more"></span>
-<h1 id="考试科目"><a href="#考试科目" class="headerlink" title="考试科目"></a>考试科目</h1><p>政治 | 英语二 | 数学二 | 408 | 总分 |<br>— | — | — | — | — | —<br>64 | 76 | 126 | 113| 377|</p>
+<h1 id="考试科目"><a href="#考试科目" class="headerlink" title="考试科目"></a>考试科目</h1><table>
+<thead>
+<tr>
+<th>政治</th>
+<th>英语二</th>
+<th>数学二</th>
+<th>408</th>
+<th>总分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>64</td>
+<td>76</td>
+<td>126</td>
+<td>113</td>
+<td>377</td>
+</tr>
+</tbody></table>
 <h2 id="21考况分析"><a href="#21考况分析" class="headerlink" title="21考况分析"></a>21考况分析</h2><h3 id="FDU考况"><a href="#FDU考况" class="headerlink" title="FDU考况"></a>FDU考况</h3><blockquote>
 <p>电子信息专硕，22408据说入复试平均分379（有错请指正）。400分➕的有100+个人，但分数线355！！！（其实是临时小扩了70-80人左右），比起隔壁科软今年FDU是真良心了。（或者说考22408的学校FDU良心）</p>
 </blockquote>
@@ -185,6 +202,26 @@
 ]]></content>
   </entry>
   <entry>
+    <title>leetcode111</title>
+    <url>/2021/04/08/leetcode111/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个二叉树，找出其最小深度。<br>最小深度是从根节点到最近叶子节点的最短路径上的节点数量。<br>说明：叶子节点是指没有子节点的节点。</p>
+<span id="more"></span>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>root = [3,9,20,null,null,15,7]</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>2</p>
+<h2 id="输入-1"><a href="#输入-1" class="headerlink" title="输入"></a>输入</h2><p>root = [2,null,3,null,4,null,5,null,6]</p>
+<h2 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h2><p>5</p>
+<h1 id="解题思路1-深搜"><a href="#解题思路1-深搜" class="headerlink" title="解题思路1: 深搜"></a>解题思路1: 深搜</h1><h1 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h1><figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode root)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (root.left == <span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.right) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (root.right == <span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.left) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> Math.min(minDepth(root.left), minDepth(root.right)) + <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="解题思路2-宽搜"><a href="#解题思路2-宽搜" class="headerlink" title="解题思路2: 宽搜"></a>解题思路2: 宽搜</h1><h1 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h1><figure class="highlight cpp"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode {</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}</span></span><br><span class="line"><span class="comment"> * };</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode* root)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> deep=<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">bfs</span>(root,deep);</span><br><span class="line">        <span class="keyword">return</span> deep;</span><br><span class="line">    }</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(TreeNode* root,<span class="keyword">int</span> &amp;deep)</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        queue&lt;TreeNode *&gt; q;</span><br><span class="line">        q.<span class="built_in">push</span>(root);</span><br><span class="line">        TreeNode* end=root;</span><br><span class="line">        <span class="keyword">int</span> level=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">        {</span><br><span class="line">            TreeNode* p = q.<span class="built_in">front</span>();</span><br><span class="line">            q.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;left==<span class="literal">NULL</span>&amp;&amp;p-&gt;right==<span class="literal">NULL</span>)</span><br><span class="line">            {</span><br><span class="line">                deep=level;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;left){q.<span class="built_in">push</span>(p-&gt;left);}</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;right){q.<span class="built_in">push</span>(p-&gt;right);}</span><br><span class="line">            <span class="keyword">if</span>(p==end)</span><br><span class="line">            {</span><br><span class="line">                end = q.<span class="built_in">back</span>();</span><br><span class="line">                level++;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>深搜</tag>
+        <tag>宽搜</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>leetcode1</title>
     <url>/2021/04/18/leetcode1/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个整数数组 nums&nbsp;和一个整数目标值 target，请你在该数组中找出 和为目标值 的那&nbsp;两个&nbsp;整数，并返回它们的数组下标。<br>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。<br>你可以按任意顺序返回答案。</p>
@@ -206,26 +243,6 @@
       <tags>
         <tag>哈希表，双指针</tag>
         <tag>求和</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>leetcode111</title>
-    <url>/2021/04/08/leetcode111/</url>
-    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个二叉树，找出其最小深度。<br>最小深度是从根节点到最近叶子节点的最短路径上的节点数量。<br>说明：叶子节点是指没有子节点的节点。</p>
-<span id="more"></span>
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>root = [3,9,20,null,null,15,7]</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>2</p>
-<h2 id="输入-1"><a href="#输入-1" class="headerlink" title="输入"></a>输入</h2><p>root = [2,null,3,null,4,null,5,null,6]</p>
-<h2 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h2><p>5</p>
-<h1 id="解题思路1-深搜"><a href="#解题思路1-深搜" class="headerlink" title="解题思路1: 深搜"></a>解题思路1: 深搜</h1><h1 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h1><figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode root)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (root.left == <span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.right) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (root.right == <span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.left) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> Math.min(minDepth(root.left), minDepth(root.right)) + <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<h1 id="解题思路2-宽搜"><a href="#解题思路2-宽搜" class="headerlink" title="解题思路2: 宽搜"></a>解题思路2: 宽搜</h1><h1 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h1><figure class="highlight cpp"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode {</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}</span></span><br><span class="line"><span class="comment"> * };</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode* root)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> deep=<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">bfs</span>(root,deep);</span><br><span class="line">        <span class="keyword">return</span> deep;</span><br><span class="line">    }</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(TreeNode* root,<span class="keyword">int</span> &amp;deep)</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        queue&lt;TreeNode *&gt; q;</span><br><span class="line">        q.<span class="built_in">push</span>(root);</span><br><span class="line">        TreeNode* end=root;</span><br><span class="line">        <span class="keyword">int</span> level=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">        {</span><br><span class="line">            TreeNode* p = q.<span class="built_in">front</span>();</span><br><span class="line">            q.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;left==<span class="literal">NULL</span>&amp;&amp;p-&gt;right==<span class="literal">NULL</span>)</span><br><span class="line">            {</span><br><span class="line">                deep=level;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;left){q.<span class="built_in">push</span>(p-&gt;left);}</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;right){q.<span class="built_in">push</span>(p-&gt;right);}</span><br><span class="line">            <span class="keyword">if</span>(p==end)</span><br><span class="line">            {</span><br><span class="line">                end = q.<span class="built_in">back</span>();</span><br><span class="line">                level++;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>深搜</tag>
-        <tag>宽搜</tag>
       </tags>
   </entry>
   <entry>
@@ -423,29 +440,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PAT乙级1031查验身份证</title>
-    <url>/2021/02/01/pat%E4%B9%99%E7%BA%A71031/</url>
-    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>一个合法的身份证号码由17位地区、日期编号和顺序编号加1位校验码组成。校验码的计算规则如下：<br>首先对前17位数字加权求和，权重分配为：{7，9，10，5，8，4，2，1，6，3，7，9，10，5，8，4，2}；然后将计算的和对11取模得到值Z；最后按照以下关系对应Z值与校验码M的值：  </p>
-<span id="more"></span>
-<p>Z：0 1 2 3 4 5 6 7 8 9 10<br>M：1 0 X 9 8 7 6 5 4 3 2</p>
-<p>现在给定一些身份证号码，请你验证校验码的有效性，并输出有问题的号码。</p>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入第一行给出正整数N（≤100）是输入的身份证号码的个数。随后N行，每行给出1个18位身份证号码。</p>
-<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><p>按照输入的顺序每行输出1个有问题的身份证号码。这里并不检验前17位是否合理，只检查前17位是否全为数字且最后1位校验码计算准确。如果所有号码都正常，则输出All passed。</p>
-<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><p>4<br>320124198808240056<br>12010X198901011234<br>110108196711301866<br>37070419881216001X</p>
-<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><p>12010X198901011234<br>110108196711301866<br>37070419881216001X</p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>首先用int数组存权重，用string存校验码，如果身份证非纯数字则输出，如果身份证前17位权重%11不等于最后Z对应的M值则输出。若全部身份证符合要求，则输出All passed。</p>
-<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
-<li>数字字符向数字的转换  数字字符-‘0’=数字</li>
-</ul>
-<h1 id="code"><a href="#code" class="headerlink" title="code"></a>code</h1><figure class="highlight c++"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">// 错误示范</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> quan[<span class="number">17</span>] = {<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">2</span>};</span><br><span class="line">    string jiaoyan = <span class="string">"10X98765432"</span>;</span><br><span class="line">    <span class="keyword">int</span> N;</span><br><span class="line">    cin&gt;&gt;N;</span><br><span class="line">    <span class="keyword">bool</span> flag=<span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;N; i++)</span><br><span class="line">    {</span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        string s;</span><br><span class="line">        cin&gt;&gt;s;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">17</span>;j++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(s[j]&lt;<span class="string">'0'</span>||s[j]&gt;<span class="string">'9'</span>) {cout&lt;&lt;s&lt;&lt;endl;flag=<span class="literal">true</span>;<span class="keyword">break</span>;}</span><br><span class="line">            sum += (s[j]-<span class="string">'0'</span>)*quan[j];</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">if</span>(flag==<span class="literal">false</span>&amp;&amp;jiaoyan[sum%<span class="number">11</span>]!=s[<span class="number">17</span>]){cout&lt;&lt;s&lt;&lt;endl;flag=<span class="literal">true</span>;}</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span>(flag==<span class="literal">false</span>) cout&lt;&lt;<span class="string">"All passed"</span>&lt;&lt;endl;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>]]></content>
-      <categories>
-        <category>PAT 乙级</category>
-      </categories>
-      <tags>
-        <tag>字符串</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PAT乙级1030完美数列</title>
     <url>/2021/01/25/pat%E4%B9%99%E7%BA%A71030/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个正整数数列，和正整数p，设这个数列中的最大值是M，最小值是m，如果M &lt;= m * p，则称这个数列是完美数列。<br>现在给定参数p和一些正整数，请你从中选择尽可能多的数构成一个完美数列。   </p>
@@ -468,6 +462,29 @@
       <tags>
         <tag>查找</tag>
         <tag>滑动窗口优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PAT乙级1031查验身份证</title>
+    <url>/2021/02/01/pat%E4%B9%99%E7%BA%A71031/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>一个合法的身份证号码由17位地区、日期编号和顺序编号加1位校验码组成。校验码的计算规则如下：<br>首先对前17位数字加权求和，权重分配为：{7，9，10，5，8，4，2，1，6，3，7，9，10，5，8，4，2}；然后将计算的和对11取模得到值Z；最后按照以下关系对应Z值与校验码M的值：  </p>
+<span id="more"></span>
+<p>Z：0 1 2 3 4 5 6 7 8 9 10<br>M：1 0 X 9 8 7 6 5 4 3 2</p>
+<p>现在给定一些身份证号码，请你验证校验码的有效性，并输出有问题的号码。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入第一行给出正整数N（≤100）是输入的身份证号码的个数。随后N行，每行给出1个18位身份证号码。</p>
+<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><p>按照输入的顺序每行输出1个有问题的身份证号码。这里并不检验前17位是否合理，只检查前17位是否全为数字且最后1位校验码计算准确。如果所有号码都正常，则输出All passed。</p>
+<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><p>4<br>320124198808240056<br>12010X198901011234<br>110108196711301866<br>37070419881216001X</p>
+<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><p>12010X198901011234<br>110108196711301866<br>37070419881216001X</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>首先用int数组存权重，用string存校验码，如果身份证非纯数字则输出，如果身份证前17位权重%11不等于最后Z对应的M值则输出。若全部身份证符合要求，则输出All passed。</p>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
+<li>数字字符向数字的转换  数字字符-‘0’=数字</li>
+</ul>
+<h1 id="code"><a href="#code" class="headerlink" title="code"></a>code</h1><figure class="highlight c++"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">// 错误示范</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> quan[<span class="number">17</span>] = {<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">2</span>};</span><br><span class="line">    string jiaoyan = <span class="string">"10X98765432"</span>;</span><br><span class="line">    <span class="keyword">int</span> N;</span><br><span class="line">    cin&gt;&gt;N;</span><br><span class="line">    <span class="keyword">bool</span> flag=<span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;N; i++)</span><br><span class="line">    {</span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        string s;</span><br><span class="line">        cin&gt;&gt;s;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">17</span>;j++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(s[j]&lt;<span class="string">'0'</span>||s[j]&gt;<span class="string">'9'</span>) {cout&lt;&lt;s&lt;&lt;endl;flag=<span class="literal">true</span>;<span class="keyword">break</span>;}</span><br><span class="line">            sum += (s[j]-<span class="string">'0'</span>)*quan[j];</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">if</span>(flag==<span class="literal">false</span>&amp;&amp;jiaoyan[sum%<span class="number">11</span>]!=s[<span class="number">17</span>]){cout&lt;&lt;s&lt;&lt;endl;flag=<span class="literal">true</span>;}</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span>(flag==<span class="literal">false</span>) cout&lt;&lt;<span class="string">"All passed"</span>&lt;&lt;endl;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>]]></content>
+      <categories>
+        <category>PAT 乙级</category>
+      </categories>
+      <tags>
+        <tag>字符串</tag>
       </tags>
   </entry>
   <entry>
@@ -605,75 +622,115 @@
     <content><![CDATA[<h3 id="各种数值类型的范围"><a href="#各种数值类型的范围" class="headerlink" title="各种数值类型的范围"></a>各种数值类型的范围</h3><h3 id="常见边界情况"><a href="#常见边界情况" class="headerlink" title="常见边界情况"></a>常见边界情况</h3>]]></content>
   </entry>
   <entry>
-    <title>深度学习4-典型的CNN</title>
-    <url>/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A04-%E5%85%B8%E5%9E%8B%E7%9A%84CNN/</url>
-    <content><![CDATA[<h1 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h1><ul>
-<li>采用ReLU激活函数</li>
-<li>输入尺寸固定256 * 256 ，论文处理为把长边缩放成256 然后进行256的中心裁剪</li>
-<li>多GPU训练<ul>
-<li>如：一个conv层要生成96个通道，可以用两个GPU分别生成48通道，提高速度</li>
-</ul>
-</li>
-<li>通道交叉</li>
-<li>局部响应归一化层（Local Response Normalization）, 后多采用批量归一化</li>
-<li>重叠池化：相邻池化窗口之间有重叠部分<span id="more"></span>
-
-
-</li>
-</ul>
-<h1 id="VGG16"><a href="#VGG16" class="headerlink" title="VGG16"></a>VGG16</h1><ul>
-<li><p>都采用3 * 3 （代替5 * 5），效果一致，还可降低参数数目和计算量</p>
-<blockquote>
-<p>堆叠含有小尺寸卷积核的卷积层来代替具有大尺寸的卷积核的卷积层，并且能够使得感受野大小不变，而且多个3x3的卷积核比一个大尺寸卷积核有更多的非线性（每个堆叠的卷积层中都包含激活函数），使得decision function更加具有判别性。</p>
+    <title>深度学习3-卷积</title>
+    <url>/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A03-%E5%8D%B7%E7%A7%AF/</url>
+    <content><![CDATA[<h1 id="全连接网络"><a href="#全连接网络" class="headerlink" title="全连接网络"></a>全连接网络</h1><ul>
+<li><p>缺点：层与层之间参数过多，计算量大，内存有限</p>
+<h1 id="卷积定义"><a href="#卷积定义" class="headerlink" title="卷积定义"></a>卷积定义</h1></li>
+<li><p>最早在信号处理里提出（对应元素相乘后求和）</p>
+<span id="more"></span></li>
+<li><p>连续函数 (先将函数$g(x)$进行对$y$轴反转，为$g(-x)$然后平移n个单位n每次增加)</p>
 <ul>
-<li><p>5 * 5的卷积核对其卷积，步长为1，得到的结果 (32-5)/1+1=28</p>
+<li>$y[n]=\int^{+\infty}_{-\infty}{f(x)}{g(n-x)}dx$</li>
+</ul>
 </li>
-<li><p>第一层3 * 3：得到的结果是(32-3)/1+1=30</p>
-<p>第二层3 * 3：得到的结果是(30-3)/1+1=28</p>
+<li><p>离散函数(g函数相当于核函数，即滤波器)</p>
+<ul>
+<li>$y[n]=\displaystyle\sum_{m={-\infty}}^{+\infty}f(m)g(n-m)$</li>
+</ul>
 </li>
 </ul>
+<h1 id="卷积网络"><a href="#卷积网络" class="headerlink" title="卷积网络"></a>卷积网络</h1><ul>
+<li><p>对维度高的特征进行压缩提取，并且大大降低特征维度</p>
+</li>
+<li><p>二维：shape计算</p>
+<ul>
+<li>${n_{out} = {[\frac{n_{in}+2p-f}{s}+1]}}$<ul>
+<li>$n_{in}为输入尺寸，p为padding层数，f为卷积核大小，s为步长$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>二维channel=总共有多少个filter（卷积核）</p>
+</li>
+<li><p>三维卷积（<strong>输出一下三维卷积和多通道卷积的网络参数个数</strong>）</p>
+<ul>
+<li>多了深度通道，<strong>这个深度可能是视频上的连续帧</strong>，也可能是<strong>立体图像中的不同切片</strong></li>
+</ul>
+</li>
+<li><p>多通道卷积（没特殊强调都是多通道卷积）</p>
+<ul>
+<li>多通道卷积<strong>不同的通道上的卷积核的参数是不同的</strong>，而3D卷积则由于卷积核本身是3D的，所以这个由于“深度”造成的看似不同通道上用的就是同一个卷积，权重共享。</li>
+</ul>
+</li>
+<li><p>共享权重和连接</p>
+<ul>
+<li>对于同一个通道（对应一个卷积核）权重和偏置是共享的</li>
+<li>如二维：对于同一个5 * 5的卷积核，共有25个参数，对应25条连线，则生成一个通道内共有25+1个参数，如果有6个卷积核生成6个通道，则这层卷积有（25+1）* 6个参数，但连接有(25+1) * 6 <em>(28 <em>28)。</em></em>可以看到多连接，少参数**</li>
+</ul>
+</li>
+</ul>
+<h1 id="空洞卷积"><a href="#空洞卷积" class="headerlink" title="空洞卷积"></a>空洞卷积</h1><ul>
+<li><p>当网络层需要较大的感受野，但计算资源有限而无法提高卷积核数量或大小时，可以考虑空洞卷积。</p>
+</li>
+<li><p>Model.summary()输出</p>
+<ul>
+<li>(batchSize, height, width, channels)，其中None值为任意尺寸<ul>
+<li><code>如(None, None, None, 3)</code>，允许可变图像大小。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h1><ul>
+<li>平均池化</li>
+<li>最大池化</li>
+<li>池化输出尺寸计算与卷积相同<ul>
+<li>共享权重和连接<ul>
+<li>和卷积不同，如2 * 2的池化单元，对应4条连线，但只有一个参数。一个通道共享偏置，则一个通道内共有2个参数，生成6个通道则共有2 * 6个参数。连线有（2 * 2 +1） * 6 * （14 * 14）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="上采样"><a href="#上采样" class="headerlink" title="上采样"></a>上采样</h1><ul>
+<li><p>双线性差值上采样</p>
+<blockquote>
+<p>单线性插值（一个方向上）就是想知道$y$对应$x$的值，已知$x_1,x_2$的$y$值可将位于$x$两侧$x_1,x_2$的点连成一条直线，来确定中间的点$x$对应的y值</p>
+<p>双线性差值 假设我们想得到函数$f$在点$P(x,y)$的值，假设知道函数$f$在点$Q_{11}=(x_1,y_1),Q_{12}=(x_1,y_2),Q_{21}=(x_2,y_1),Q_{22}=(x_2,y_2)$的值</p>
+<p>先在$x$方向进行差值 </p>
+<p>$f(R_1) \approx \frac{x_2-x}{x_2-x_1}f(Q_{11})+\frac{x-x_1}{x_2-x_1}f(Q_{21}),\qquad R_1=(x,y1)$ </p>
+<p>$f(R_2) \approx \frac{x_2-x}{x_2-x_1}f(Q_{12})+\frac{x-x_1}{x_2-x_1}f(Q_{22}),\qquad R_2=(x,y2)$</p>
+<p>再对$y$方向进行差值</p>
+<p>$f(P) \approx \frac{y_2-y}{y_2-y_1}f(R1)+\frac{y-y_1}{y_2-y_1}f(R_{2})$</p>
+<p>最常见的情况，$f$就是一个像素点的像素值。</p>
 </blockquote>
+</li>
+<li><p>三次内插法</p>
+</li>
+<li><p>Transform Conv(并非反卷积，反卷积为卷积的数学逆操作，而Transform本质仍是卷积)</p>
 <blockquote>
-<ul>
-<li><p>一个5 * 5的参数量为 （5x5+output_channels(其实是偏置数量)）x output_channels ;<br>两个3 * 3的参数量为（3x3+output_channels） x output_channels*2 ;</p>
-</li>
-<li><p>一个5 * 5的计算量为 （5x5) x ouput_channels x output_height x output_width</p>
-<p>两个3 * 3的计算量为 （3x3）x output_channels x output_height x output_height x 2 </p>
-</li>
-</ul>
-<p>2个33等于一个55，同理3个33等于一个77</p>
+<p>在每个像素周围补0，然后用卷积核操作得到输出</p>
 </blockquote>
 </li>
-<li><p>卷积组（卷积+卷积+池化或者 卷积+卷积+卷积+池化）</p>
-</li>
-</ul>
-<h1 id="GoogleNet"><a href="#GoogleNet" class="headerlink" title="GoogleNet"></a>GoogleNet</h1><ul>
-<li><p>组成卷积模块（Inception Module)，module之间级联</p>
-<ul>
-<li>模块内通过做不同次数和大小的卷积可以在模块内获得不同的深浅信息</li>
-<li>在不同模块处理后输出</li>
-</ul>
-</li>
-<li><p>使用1 * 1卷积，减少权重数量，增加通道数，减少计算量。使得网络虽然变深，但参数和计算量并没有增长过快</p>
+<li><p>反池化</p>
 <blockquote>
-<p>假设输入28 * 28 * 192，输出为28 * 28 * 32</p>
+<p>为了进行反池化操作，我们还需额外把（编码器中的）最大池化层的索引都存储起来(即下采样时最大池化选取值所在的位置)，用于之后（解码器中的）的反池化操作。恢复到原始尺寸，将数据映射到索引处，其它地方填充零。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>这样尽管会忽略邻近的信息，会丢弃大量低频信息，但是它有助于保持高频信息的完整性。</p>
 <ol>
-<li><p>使用32个5 * 5 * 192的卷积核卷积</p>
-</li>
-<li><p>先使用16个1 * 1卷积核对输入卷积，输出28 * 28 * 16，然后再用32个5 * 5  * 16进行卷积，输出28 * 28 * 32</p>
-</li>
+<li>减少了进行端到端训练的参数量。</li>
+<li>对max-pooling来说，它可以提高边界的勾画，即突出高频信息。</li>
 </ol>
-<ul>
-<li>直接5 * 5参数量为5 * 5 * 192 * 32，计算量为 5 * 5 * 192  * 28 * 28 * 32 </li>
-<li>先1 * 1后5 * 5  参数量为 1 * 1 * 192  * 16 + 5 * 5 * 16 * 32，计算量为 1 * 1 * 192 * 28 *28 * 16 + 5  *  5  *  16  *  28 * 28 * 32 </li>
-</ul>
+<p>最大值相同地填充至一个区域内（上图中邻近的4格）或者做平均填充，那么不但不能准确地表示高频信息，又不能保证能够表达出低频信息，这就不如上面的做法能保证高频信息的完整性。</p>
 </blockquote>
-</li>
-</ul>
-<h1 id="ResNet（18，34，50，152）"><a href="#ResNet（18，34，50，152）" class="headerlink" title="ResNet（18，34，50，152）"></a>ResNet（18，34，50，152）</h1><ul>
-<li><h2 id="残差块（圆圈-号为通道的连接）"><a href="#残差块（圆圈-号为通道的连接）" class="headerlink" title="残差块（圆圈+号为通道的连接）"></a>残差块（圆圈+号为通道的连接）</h2></li>
-</ul>
-<h1 id="DenseNet"><a href="#DenseNet" class="headerlink" title="DenseNet"></a>DenseNet</h1>]]></content>
+<blockquote>
+<p> 双线性插值方法实现简单，无需训练；反卷积上采样需要训练，但能更好的还原特征图；反池化几本不用</p>
+</blockquote>
+]]></content>
       <categories>
         <category>DL</category>
       </categories>
@@ -838,115 +895,75 @@
       </tags>
   </entry>
   <entry>
-    <title>深度学习3-卷积</title>
-    <url>/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A03-%E5%8D%B7%E7%A7%AF/</url>
-    <content><![CDATA[<h1 id="全连接网络"><a href="#全连接网络" class="headerlink" title="全连接网络"></a>全连接网络</h1><ul>
-<li><p>缺点：层与层之间参数过多，计算量大，内存有限</p>
-<h1 id="卷积定义"><a href="#卷积定义" class="headerlink" title="卷积定义"></a>卷积定义</h1></li>
-<li><p>最早在信号处理里提出（对应元素相乘后求和）</p>
-<span id="more"></span></li>
-<li><p>连续函数 (先将函数$g(x)$进行对$y$轴反转，为$g(-x)$然后平移n个单位n每次增加)</p>
-<ul>
-<li>$y[n]=\int^{+\infty}_{-\infty}{f(x)}{g(n-x)}dx$</li>
+    <title>深度学习4-典型的CNN</title>
+    <url>/2021/04/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A04-%E5%85%B8%E5%9E%8B%E7%9A%84CNN/</url>
+    <content><![CDATA[<h1 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h1><ul>
+<li>采用ReLU激活函数</li>
+<li>输入尺寸固定256 * 256 ，论文处理为把长边缩放成256 然后进行256的中心裁剪</li>
+<li>多GPU训练<ul>
+<li>如：一个conv层要生成96个通道，可以用两个GPU分别生成48通道，提高速度</li>
 </ul>
 </li>
-<li><p>离散函数(g函数相当于核函数，即滤波器)</p>
-<ul>
-<li>$y[n]=\displaystyle\sum_{m={-\infty}}^{+\infty}f(m)g(n-m)$</li>
-</ul>
+<li>通道交叉</li>
+<li>局部响应归一化层（Local Response Normalization）, 后多采用批量归一化</li>
+<li>重叠池化：相邻池化窗口之间有重叠部分<span id="more"></span>
+
+
 </li>
 </ul>
-<h1 id="卷积网络"><a href="#卷积网络" class="headerlink" title="卷积网络"></a>卷积网络</h1><ul>
-<li><p>对维度高的特征进行压缩提取，并且大大降低特征维度</p>
-</li>
-<li><p>二维：shape计算</p>
-<ul>
-<li>${n_{out} = {[\frac{n_{in}+2p-f}{s}+1]}}$<ul>
-<li>$n_{in}为输入尺寸，p为padding层数，f为卷积核大小，s为步长$</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>二维channel=总共有多少个filter（卷积核）</p>
-</li>
-<li><p>三维卷积（<strong>输出一下三维卷积和多通道卷积的网络参数个数</strong>）</p>
-<ul>
-<li>多了深度通道，<strong>这个深度可能是视频上的连续帧</strong>，也可能是<strong>立体图像中的不同切片</strong></li>
-</ul>
-</li>
-<li><p>多通道卷积（没特殊强调都是多通道卷积）</p>
-<ul>
-<li>多通道卷积<strong>不同的通道上的卷积核的参数是不同的</strong>，而3D卷积则由于卷积核本身是3D的，所以这个由于“深度”造成的看似不同通道上用的就是同一个卷积，权重共享。</li>
-</ul>
-</li>
-<li><p>共享权重和连接</p>
-<ul>
-<li>对于同一个通道（对应一个卷积核）权重和偏置是共享的</li>
-<li>如二维：对于同一个5 * 5的卷积核，共有25个参数，对应25条连线，则生成一个通道内共有25+1个参数，如果有6个卷积核生成6个通道，则这层卷积有（25+1）* 6个参数，但连接有(25+1) * 6 <em>(28 <em>28)。</em></em>可以看到多连接，少参数**</li>
-</ul>
-</li>
-</ul>
-<h1 id="空洞卷积"><a href="#空洞卷积" class="headerlink" title="空洞卷积"></a>空洞卷积</h1><ul>
-<li><p>当网络层需要较大的感受野，但计算资源有限而无法提高卷积核数量或大小时，可以考虑空洞卷积。</p>
-</li>
-<li><p>Model.summary()输出</p>
-<ul>
-<li>(batchSize, height, width, channels)，其中None值为任意尺寸<ul>
-<li><code>如(None, None, None, 3)</code>，允许可变图像大小。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h1><ul>
-<li>平均池化</li>
-<li>最大池化</li>
-<li>池化输出尺寸计算与卷积相同<ul>
-<li>共享权重和连接<ul>
-<li>和卷积不同，如2 * 2的池化单元，对应4条连线，但只有一个参数。一个通道共享偏置，则一个通道内共有2个参数，生成6个通道则共有2 * 6个参数。连线有（2 * 2 +1） * 6 * （14 * 14）</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="上采样"><a href="#上采样" class="headerlink" title="上采样"></a>上采样</h1><ul>
-<li><p>双线性差值上采样</p>
+<h1 id="VGG16"><a href="#VGG16" class="headerlink" title="VGG16"></a>VGG16</h1><ul>
+<li><p>都采用3 * 3 （代替5 * 5），效果一致，还可降低参数数目和计算量</p>
 <blockquote>
-<p>单线性插值（一个方向上）就是想知道$y$对应$x$的值，已知$x_1,x_2$的$y$值可将位于$x$两侧$x_1,x_2$的点连成一条直线，来确定中间的点$x$对应的y值</p>
-<p>双线性差值 假设我们想得到函数$f$在点$P(x,y)$的值，假设知道函数$f$在点$Q_{11}=(x_1,y_1),Q_{12}=(x_1,y_2),Q_{21}=(x_2,y_1),Q_{22}=(x_2,y_2)$的值</p>
-<p>先在$x$方向进行差值 </p>
-<p>$f(R_1) \approx \frac{x_2-x}{x_2-x_1}f(Q_{11})+\frac{x-x_1}{x_2-x_1}f(Q_{21}),\qquad R_1=(x,y1)$ </p>
-<p>$f(R_2) \approx \frac{x_2-x}{x_2-x_1}f(Q_{12})+\frac{x-x_1}{x_2-x_1}f(Q_{22}),\qquad R_2=(x,y2)$</p>
-<p>再对$y$方向进行差值</p>
-<p>$f(P) \approx \frac{y_2-y}{y_2-y_1}f(R1)+\frac{y-y_1}{y_2-y_1}f(R_{2})$</p>
-<p>最常见的情况，$f$就是一个像素点的像素值。</p>
+<p>堆叠含有小尺寸卷积核的卷积层来代替具有大尺寸的卷积核的卷积层，并且能够使得感受野大小不变，而且多个3x3的卷积核比一个大尺寸卷积核有更多的非线性（每个堆叠的卷积层中都包含激活函数），使得decision function更加具有判别性。</p>
+<ul>
+<li><p>5 * 5的卷积核对其卷积，步长为1，得到的结果 (32-5)/1+1=28</p>
+</li>
+<li><p>第一层3 * 3：得到的结果是(32-3)/1+1=30</p>
+<p>第二层3 * 3：得到的结果是(30-3)/1+1=28</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>一个5 * 5的参数量为 （5x5+output_channels(其实是偏置数量)）x output_channels ;<br>两个3 * 3的参数量为（3x3+output_channels） x output_channels*2 ;</p>
+</li>
+<li><p>一个5 * 5的计算量为 （5x5) x ouput_channels x output_height x output_width</p>
+<p>两个3 * 3的计算量为 （3x3）x output_channels x output_height x output_height x 2 </p>
+</li>
+</ul>
+<p>2个33等于一个55，同理3个33等于一个77</p>
 </blockquote>
 </li>
-<li><p>三次内插法</p>
-</li>
-<li><p>Transform Conv(并非反卷积，反卷积为卷积的数学逆操作，而Transform本质仍是卷积)</p>
-<blockquote>
-<p>在每个像素周围补0，然后用卷积核操作得到输出</p>
-</blockquote>
-</li>
-<li><p>反池化</p>
-<blockquote>
-<p>为了进行反池化操作，我们还需额外把（编码器中的）最大池化层的索引都存储起来(即下采样时最大池化选取值所在的位置)，用于之后（解码器中的）的反池化操作。恢复到原始尺寸，将数据映射到索引处，其它地方填充零。</p>
-</blockquote>
+<li><p>卷积组（卷积+卷积+池化或者 卷积+卷积+卷积+池化）</p>
 </li>
 </ul>
+<h1 id="GoogleNet"><a href="#GoogleNet" class="headerlink" title="GoogleNet"></a>GoogleNet</h1><ul>
+<li><p>组成卷积模块（Inception Module)，module之间级联</p>
+<ul>
+<li>模块内通过做不同次数和大小的卷积可以在模块内获得不同的深浅信息</li>
+<li>在不同模块处理后输出</li>
+</ul>
+</li>
+<li><p>使用1 * 1卷积，减少权重数量，增加通道数，减少计算量。使得网络虽然变深，但参数和计算量并没有增长过快</p>
 <blockquote>
-<p>这样尽管会忽略邻近的信息，会丢弃大量低频信息，但是它有助于保持高频信息的完整性。</p>
+<p>假设输入28 * 28 * 192，输出为28 * 28 * 32</p>
 <ol>
-<li>减少了进行端到端训练的参数量。</li>
-<li>对max-pooling来说，它可以提高边界的勾画，即突出高频信息。</li>
+<li><p>使用32个5 * 5 * 192的卷积核卷积</p>
+</li>
+<li><p>先使用16个1 * 1卷积核对输入卷积，输出28 * 28 * 16，然后再用32个5 * 5  * 16进行卷积，输出28 * 28 * 32</p>
+</li>
 </ol>
-<p>最大值相同地填充至一个区域内（上图中邻近的4格）或者做平均填充，那么不但不能准确地表示高频信息，又不能保证能够表达出低频信息，这就不如上面的做法能保证高频信息的完整性。</p>
+<ul>
+<li>直接5 * 5参数量为5 * 5 * 192 * 32，计算量为 5 * 5 * 192  * 28 * 28 * 32 </li>
+<li>先1 * 1后5 * 5  参数量为 1 * 1 * 192  * 16 + 5 * 5 * 16 * 32，计算量为 1 * 1 * 192 * 28 *28 * 16 + 5  *  5  *  16  *  28 * 28 * 32 </li>
+</ul>
 </blockquote>
-<blockquote>
-<p> 双线性插值方法实现简单，无需训练；反卷积上采样需要训练，但能更好的还原特征图；反池化几本不用</p>
-</blockquote>
-]]></content>
+</li>
+</ul>
+<h1 id="ResNet（18，34，50，152）"><a href="#ResNet（18，34，50，152）" class="headerlink" title="ResNet（18，34，50，152）"></a>ResNet（18，34，50，152）</h1><ul>
+<li><h2 id="残差块（圆圈-号为通道的连接）"><a href="#残差块（圆圈-号为通道的连接）" class="headerlink" title="残差块（圆圈+号为通道的连接）"></a>残差块（圆圈+号为通道的连接）</h2></li>
+</ul>
+<h1 id="DenseNet"><a href="#DenseNet" class="headerlink" title="DenseNet"></a>DenseNet</h1>]]></content>
       <categories>
         <category>DL</category>
       </categories>
