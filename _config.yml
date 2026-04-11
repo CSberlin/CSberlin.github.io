@@ -1,6 +1,0 @@
-title: HCs blog
-description: "才高八里"
-author: HC
-url: "https://csberlin.github.io"
-theme: jekyll-theme-minimal
-exclude: [".git", "node_modules", "source", "themes", "_config.yml.bak"]
