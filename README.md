@@ -68,17 +68,16 @@ npm run build
 npm run server
 ```
 
-本地确认没问题后，再提交源码并部署：
+本地确认没问题后，提交源码并推送到 GitHub：
 
 ```bash
 # 提交 Markdown、配置、主题等源码改动
 git add .
 git commit -m "add post: 文章标题"
 git push
-
-# 发布到 GitHub Pages
-npm run deploy
 ```
+
+推送到 `master` 后，GitHub Actions 会自动构建 Hexo 并发布到 GitHub Pages。
 
 注意：不要手动编辑 `public/` 里的文件。`public/` 是 Hexo 构建产物，应该通过 `npm run build` 自动生成。
 
@@ -113,7 +112,7 @@ npm run build
 npm run server
 ```
 
-之后就可以按“日常写博客流程”新建、预览、提交和部署文章。
+之后就可以按“日常写博客流程”新建、预览、提交和发布文章。
 
 多台电脑协作时，写文章前先 `git pull`，写完文章后及时 `git push`，确保另一台电脑能拿到最新源码。
 
@@ -135,10 +134,17 @@ copyright: true
 
 ## 发布
 
-确认构建无误后：
+当前仓库采用 GitHub Actions 发布。日常只需要把源码推送到 `master`：
 
 ```bash
-npm run deploy
+git push
 ```
 
-部署目标配置在 `_config.yml` 的 `deploy` 字段。
+推送后，GitHub 会自动执行 `.github/workflows/pages.yml`：
+
+1. 安装依赖。
+2. 执行 `npm run check` 检查文章元数据。
+3. 执行 `npm run clean && npm run build` 生成 `public/`。
+4. 将 `public/` 作为 GitHub Pages 站点发布。
+
+不需要手动提交或编辑 `public/`，也不需要本地执行 `npm run deploy`。
