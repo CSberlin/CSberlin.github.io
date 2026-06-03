@@ -3,6 +3,12 @@ const path = require('path');
 
 const postsDir = path.join(__dirname, '..', 'source', '_posts');
 const requiredFields = ['title', 'date'];
+const forbiddenPatterns = [
+  {
+    pattern: /本文由\s*AI\s*自动生成/i,
+    message: 'remove AI generated note'
+  }
+];
 const files = fs.readdirSync(postsDir).filter((file) => file.endsWith('.md'));
 const invalid = [];
 
@@ -26,6 +32,12 @@ for (const file of files) {
     const pattern = new RegExp(`^${field}:\\s*\\S+`, 'm');
     if (!pattern.test(frontMatter)) {
       invalid.push(`${file}: missing ${field}`);
+    }
+  }
+
+  for (const { pattern, message } of forbiddenPatterns) {
+    if (pattern.test(content)) {
+      invalid.push(`${file}: ${message}`);
     }
   }
 }
