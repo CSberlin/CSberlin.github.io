@@ -1,50 +1,81 @@
 const assert = require('assert');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const Hexo = require('hexo');
-const { stripHTML } = require('hexo-util');
-const { mathjax } = require('mathjax-full/js/mathjax.js');
-const { TeX } = require('mathjax-full/js/input/tex.js');
-const { AllPackages } = require('mathjax-full/js/input/tex/AllPackages.js');
-const { CHTML } = require('mathjax-full/js/output/chtml.js');
-const { liteAdaptor } = require('mathjax-full/js/adaptors/liteAdaptor.js');
-const { RegisterHTMLHandler } = require('mathjax-full/js/handlers/html.js');
+const { JSDOM, ResourceLoader } = require('jsdom');
 
 const fixtureMarker = 'rendering-acceptance-fixture';
 
-async function checkRenderingFixture(rootDir) {
+async function generateRenderingFixture(rootDir) {
   const fixturePath = path.join(rootDir, 'test', 'fixtures', 'rendering.md');
-  const hexo = new Hexo(rootDir, { silent: true });
-  await hexo.init();
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'hexo-rendering-acceptance-'));
+  const sourceDir = path.join(tempDir, 'source');
+  const publicDir = path.join(tempDir, 'public');
+  const hexo = new Hexo(rootDir, { silent: true, output: tempDir });
 
   try {
-    const rendered = await hexo.post.render(fixturePath, {
-      source: fixturePath,
-      excerpt: ''
-    });
-    const content = rendered.content;
+    fs.cpSync(path.join(rootDir, 'source'), sourceDir, { recursive: true });
+    fs.copyFileSync(fixturePath, path.join(sourceDir, '_posts', 'rendering-acceptance-fixture.md'));
 
-    assert(content.includes(fixtureMarker), 'rendering fixture content is missing');
-    assert(content.includes('<span class="github-emoji"'), 'fixture emoji was not converted to GitHub emoji output');
-    assert(!content.includes(':rocket:'), 'fixture still contains the unconverted emoji shortcode');
-    assert(content.includes('<figure class="highlight js">'), 'fixture code block was not highlighted');
-    assert(stripHTML(content).includes('const answer = 42;'), 'fixture code block content is missing');
+    await hexo.init();
+    hexo.source_dir = sourceDir + path.sep;
+    hexo.source.base = hexo.source_dir;
+    hexo.public_dir = publicDir + path.sep;
+    await hexo.call('generate', { force: true });
 
-    const adaptor = liteAdaptor();
-    RegisterHTMLHandler(adaptor);
-    const document = mathjax.document(content, {
-      InputJax: new TeX({ packages: AllPackages }),
-      OutputJax: new CHTML()
-    });
-    document.render();
-    const typeset = adaptor.outerHTML(adaptor.root(document.document));
-    const containers = typeset.match(/<mjx-container\b/g) || [];
-
-    assert.strictEqual(containers.length, 2, 'fixture inline and block formulas did not both generate mjx-container');
-    assert(/<mjx-container\b(?![^>]*\bdisplay=)/.test(typeset), 'fixture inline formula did not generate an inline mjx-container');
-    assert(/<mjx-container\b[^>]*\bdisplay="true"/.test(typeset), 'fixture block formula did not generate a display mjx-container');
+    const fixturePage = path.join(publicDir, 'rendering-acceptance-fixture', 'index.html');
+    assert(fs.existsSync(fixturePage), 'generated rendering fixture page is missing');
+    return fs.readFileSync(fixturePage, 'utf8');
   } finally {
     await hexo.exit();
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+}
+
+async function checkRenderingFixture(rootDir) {
+  const html = await generateRenderingFixture(rootDir);
+  const mathjaxBundle = fs.readFileSync(require.resolve('mathjax-full/es5/tex-mml-chtml.js'));
+  let mathjaxRequests = 0;
+
+  class LocalMathJaxLoader extends ResourceLoader {
+    fetch(url, options) {
+      if (options.element?.tagName === 'SCRIPT' && /mathjax.*\/tex-mml-chtml\.js$/.test(url)) {
+        mathjaxRequests++;
+        return Promise.resolve(mathjaxBundle);
+      }
+      return null;
+    }
+  }
+
+  const dom = new JSDOM(html, {
+    url: 'https://example.test/rendering-acceptance-fixture/',
+    resources: new LocalMathJaxLoader(),
+    runScripts: 'dangerously'
+  });
+
+  try {
+    const { document } = dom.window;
+    assert(document.body.textContent.includes(fixtureMarker), 'generated fixture page content is missing');
+    assert(document.querySelector('.github-emoji'), 'generated fixture emoji was not converted to GitHub emoji output');
+    assert(!document.body.textContent.includes(':rocket:'), 'generated fixture still contains the unconverted emoji shortcode');
+    assert(document.querySelector('figure.highlight.js'), 'generated fixture code block was not highlighted');
+    assert(document.body.textContent.includes('const answer = 42;'), 'generated fixture code block content is missing');
+
+    const deadline = Date.now() + 10000;
+    while (!dom.window.MathJax?.startup?.promise && Date.now() < deadline) {
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    }
+    assert(dom.window.MathJax?.startup?.promise, 'generated fixture MathJax loader timed out');
+    await dom.window.MathJax.startup.promise;
+
+    const containers = [...document.querySelectorAll('mjx-container')];
+    assert.strictEqual(mathjaxRequests, 1, 'generated fixture did not load MathJax exactly once');
+    assert.strictEqual(containers.length, 2, 'generated fixture inline and block formulas did not both generate mjx-container');
+    assert(containers.some((container) => !container.hasAttribute('display')), 'generated fixture inline formula did not generate an inline mjx-container');
+    assert(containers.some((container) => container.getAttribute('display') === 'true'), 'generated fixture block formula did not generate a display mjx-container');
+  } finally {
+    dom.window.close();
   }
 }
 
@@ -82,8 +113,6 @@ async function checkGeneratedSite() {
   assert(/title="阅读时长"[\s\S]*?<span>(?:\d+ 分钟|\d+:\d{2})<\/span>/.test(post), 'post has no reading time value');
   assert(/title="站点总字数">[\d.]+[km]<\/span>/.test(post), 'site total word count is missing');
   assert(/title="站点阅读时长">(?:\d+ 分钟|\d+:\d{2})<\/span>/.test(post), 'site total reading time is missing');
-  assert(post.includes('mathjax@3/es5/tex-mml-chtml.js'), 'MathJax 3 loader is missing');
-
   const feed = read('atom.xml');
   assert(feed.startsWith('<?xml version="1.0" encoding="utf-8"?>\n<feed '), 'feed is not Atom XML');
   assert(feed.includes('<entry>'), 'feed has no entries');
@@ -95,7 +124,7 @@ async function checkGeneratedSite() {
 
   await checkRenderingFixture(rootDir);
 
-  console.log('Checked generated site output and fixture rendering for MathJax, emoji, and code blocks.');
+  console.log('Checked generated site output and actual NexT MathJax loader rendering for MathJax, emoji, and code blocks.');
 }
 
 if (require.main === module) {

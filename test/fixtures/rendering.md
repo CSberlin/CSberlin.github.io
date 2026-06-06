@@ -1,6 +1,13 @@
+---
+title: rendering-acceptance-fixture
+date: 2020-01-01 00:00:00
+mathjax: true
+permalink: rendering-acceptance-fixture/
+---
+
 Acceptance fixture marker: rendering-acceptance-fixture.
 
-Inline formula: \\(x + 1\\).
+Inline formula: $x + 1$.
 
 Block formula:
 
