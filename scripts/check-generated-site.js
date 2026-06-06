@@ -1,6 +1,5 @@
 const assert = require('assert');
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
 const Hexo = require('hexo');
 const { JSDOM, ResourceLoader } = require('jsdom');
@@ -9,7 +8,7 @@ const fixtureMarker = 'rendering-acceptance-fixture';
 
 async function generateRenderingFixture(rootDir) {
   const fixturePath = path.join(rootDir, 'test', 'fixtures', 'rendering.md');
-  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'hexo-rendering-acceptance-'));
+  const tempDir = fs.mkdtempSync(path.join(rootDir, '.hexo-rendering-acceptance-'));
   const sourceDir = path.join(tempDir, 'source');
   const publicDir = path.join(tempDir, 'public');
   const hexo = new Hexo(rootDir, { silent: true, output: tempDir });
